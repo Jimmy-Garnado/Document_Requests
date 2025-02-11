@@ -1,0 +1,18 @@
+{
+    "name": "bokzg/registrar2",
+    "autoload": {
+        "psr-4": {
+            "Bokzg\\Registrar2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ariel Jericko Gacilo",
+            "email": "42305618+bokzgacilo@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "phpoffice/phpspreadsheet": "^3.3"
+    }
+}
