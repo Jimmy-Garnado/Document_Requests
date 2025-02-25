@@ -33,10 +33,18 @@
   $purpose = $_POST['purpose'];
   $request_date = $_POST['request_date'];
 
-  $docu = $conn -> query("SELECT price FROM supported_documents WHERE name='$document_type' LIMIT 1");
-  $docu = $docu -> fetch_assoc();
+  $total_price = 0;
 
-  $price = $docu['price'];
+  foreach ($document_type as $doc_type) {
+    $docu = $conn -> query("SELECT price FROM supported_documents WHERE name='$doc_type' LIMIT 1");
+    $docu = $docu -> fetch_assoc();
+
+    $price = $docu['price'];
+
+    $total_price = $total_price + $price;
+  }
+
+  $doc_json = json_encode($document_type, true);
 
   $insert = "INSERT INTO requests (
     client_name,
@@ -72,17 +80,19 @@
     '$street', 
     '$barangay', 
     '$city', 
-    '$document_type', 
+    '$doc_json', 
     '$academic_year', 
     '$purpose', 
     '$request_date', 
-    $price,
+    $total_price,
     NOW(),
     'Pending'
   )";
 
+  $list_of_document = implode(", ", $document_type);
+
   if($conn -> query($insert)){
-    if(sendEmail($client_email, $document_type)){
+    if(sendEmail($client_email, $list_of_document)){
       echo json_encode(['status' => 'success', 'message' => 'Request Submitted', 'description' => 'Request submitted, please wait atleast 3-5 business days to complete your request.']);
     }
   }else {

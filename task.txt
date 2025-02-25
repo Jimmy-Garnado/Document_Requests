@@ -1,0 +1,30 @@
+Allow students to pick the date of release. (CONFLICT WITH #3)
+✅ Add "Forgot Password" functionality.
+Implement registrar-controlled release date selection. (CONFLICT WITH #1)
+✅ Require payment before release.
+Enable students to request, validate requirements, and make payment (if requirements are needed).
+✅ Track who approved or handled the transaction (logs).
+Hide passwords for security.
+Include student data for CYS (Course, Year, Section).
+Upon release, track who picked up the document.
+Handle scenarios where an authorized representative picks up the document.
+Manage requests that are not listed in the provided options.
+Define the rule for "Number of Copies" (1:1 ratio or alternative).
+✅ Allow students to request multiple documents in a single transaction.
+Add a verification process during login:
+Automatically detect the email using the Student ID.
+Ensure users are correctly identified and given default passwords.
+✅ Use "Import" instead of "Batch."
+✅ Add "Student" instead of "Single" options.
+✅ Implement archival for users instead of deletion (Active/Inactive).
+✅ Create a single dashboard with role-specific dropdowns for login.
+
+
+
+
+STUDENT
+11
+*^8R7A5|UR.=
+
+2
+2

@@ -7,6 +7,7 @@
   $select = $conn -> query("SELECT * FROM users WHERE stuid='$stuid' LIMIT 1");
   $user = $select -> fetch_assoc();
 
+  $document_type = $_POST['document_type'];
   echo "
     <h4 class='fw-bold mb-4'>Request Details</h4>
     <div class='row'>
@@ -37,7 +38,22 @@
       <div class='col-4'>
         <label class='fw-semibold'>Document Type</label>
       </div>
-      <div class='col-8'>".$_POST['document_type']."</div>
+    </div>
+    <div class='row'>
+    ";
+    foreach($document_type as $doc_type ) {
+      echo "
+      <div class='col-2'>
+          <input class='form-check-input' type='checkbox' value='".$doc_type."' checked disabled />
+      
+      </div>
+      <div class='col-10'>
+          <label class='form-check-label'>".$doc_type."</label>
+      
+      </div>
+       ";
+    }
+    echo "
     </div>
     <div class='row'>
       <div class='col-4'>

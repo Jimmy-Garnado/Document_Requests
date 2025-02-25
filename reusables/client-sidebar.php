@@ -4,10 +4,6 @@
       display: none !important;
     }
   }
-
-  
-
-
   .sidebar > a {
     padding: 1rem;
     cursor: pointer;
@@ -71,6 +67,7 @@
     font-size: 12px;
   }
 </style>
+
 <div class="sidebar col-2">
   <img src="images/bpc-logo.png" width="120px" height="120px" class="align-self-center">
   <h2 class="mt-4 mb-4 align-self-center text-white ">Menu</h2>
@@ -86,10 +83,6 @@
     <i class="fa-regular fa-user"></i>
     <span>Profile</span>
   </a>
-  <!-- <a href="notifications.php">
-    <i class="fa-regular fa-bell"></i>
-    <span>Notifications</span>
-  </a> -->
   <a class="logoutButton">
     <i class="fa-solid fa-power-off"></i>
     <span>Log Out</span>

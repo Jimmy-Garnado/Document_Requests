@@ -37,12 +37,13 @@
     </div>
   </div>
 
-  <main class="container-fluid d-flex flex-row p-0">
+  <main class="container-fluid d-flex flex-lg-row flex-column p-0">
     <?php include("../reusables/admin-sidebar.php"); ?>
     
-    <div class="col-10 p-4">
+    <section class="col-12 col-lg-10 p-2 p-lg-4">
       <h4 class="mb-4 fw-bold">REQUEST</h4>
-      <table id="example" class="display table" style="width:100%">
+      <div class='table-responsive'>
+      <table id="example" class="display table" >
         <thead>
           <tr>
             <th>Request ID</th>
@@ -54,7 +55,9 @@
           </tr>
         </thead>
       </table>
-    </div>
+      </div>
+      
+    </section>
   </main>
   <script>
     $(document).on("click", '.approveButton', function(){

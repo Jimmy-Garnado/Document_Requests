@@ -68,6 +68,7 @@
           }
         ?></h5>
         <h5>Price: <?php echo $row['price']; ?> PHP</h5>
+        <h5>Approved By: <?php echo $row['assigned_staff']; ?></h5>
         <h5>Date Requested: <?php echo date('M d, Y', strtotime($row['request_date'])) ; ?></h5>
         <hr />
         <h3>Student Information</h3>
@@ -122,9 +123,22 @@
         <div class="row">
           <div class="col-12 col-md-6 col-lg-3">
             <label for="exampleInputPassword1" class="form-label">Document Type</label>
-            <select class="form-select">
+            <?php
+              $document_type = json_decode($row['document_type']);
+              foreach($document_type as $doc_type ) {
+                echo "
+                <div class='form-check'>
+                    <input class='form-check-input' type='checkbox' value='".$doc_type."' checked disabled />
+                
+                    <label class='form-check-label'>".$doc_type."</label>
+                
+                </div>
+                 ";
+              }
+            ?>
+            <!-- <select class="form-select">
               <option selected><?php echo $row['document_type']; ?></option>
-            </select>
+            </select> -->
           </div>
           <div class="col-12 col-md-6 col-lg-3">
             <label for="exampleInputPassword1" class="form-label">Academic Year</label>

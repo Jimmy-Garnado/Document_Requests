@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 
 // Create a new PHPMailer instance
 
-function sendEmailApprove($client_email, $document_type){
+function sendEmailApprove($staffname, $client_email, $document_type){
   $mail = new PHPMailer(true);
 
   try {
@@ -30,7 +30,8 @@ function sendEmailApprove($client_email, $document_type){
     $mail->Body = '
         <p>Dear Recipient,</p>
         <p>We are pleased to inform you that your request for ' . htmlspecialchars($document_type) . ' has been approved.</p>
-        <p>The registrar will now process your request, and it will take approximately 3-5 business days to complete.</p>
+        <p>Staff '.$staffname.' was assigned to process your request, and it will take approximately 3-5 business days to complete.</p>
+        <p>
         <p>We appreciate your patience and understanding.</p>
         <p>Best regards,<br>BPC Registrar</p>
     ';

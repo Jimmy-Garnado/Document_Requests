@@ -95,14 +95,6 @@
             var dayOfWeek = cellDate.getDate() - 1;
             remainingSlots = (dayOfWeek >= 1 && dayOfWeek <= 5) ? 5 : 0; // 5 for Mon-Fri, 0 for weekends
           }
-
-          // Display remaining slots inside the calendar day cell
-          // var slotLabel = document.createElement('div');
-          // slotLabel.classList.add('custom-daygrid');
-          // slotLabel.textContent = `${remainingSlots} slots`; // Display slot count with a label
-          // info.el.appendChild(slotLabel);
-
-          // Add specific styles for past dates, today, and future dates
           if (cellDate < today) {
             info.el.classList.add('fc-day-past'); // Style past dates
           } else if (isToday) {
@@ -131,7 +123,6 @@
 
           if (clickedDate >= today) {
             $("input[name='request_date']").val(info.dateStr)
-            // alert('You clicked: ' + info.dateStr);
           } else {
             Swal.fire({
               icon: 'error',
@@ -223,7 +214,6 @@
             </div>
             <div class="form-group mb-2">
               <label class="form-label fw-semibold">Document Type</label>
-              <select class="form-select" name="document_type">
                 <?php
                   include("api/connection.php");
 
@@ -231,14 +221,16 @@
 
                   while($row = $document -> fetch_assoc()){
                     echo "
-                      <option value='".$row['name']."'>".$row['name']."</option>
+                      <div class='form-check'>
+                        <input class='form-check-input' name='document_type[]' type='checkbox' value='".$row['name']."' />
+                        <label class='form-check-label'>".$row['name']."</label>
+                      </div>
                     ";
                   }
 
                   $conn -> close();
                 ?>
 
-              </select>
             </div>
             <div class="form-group mb-2">
               <label class="form-label fw-semibold">Academic Year</label>

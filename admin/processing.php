@@ -12,23 +12,26 @@
   <?php include("static-loader.php"); ?>
 </head>
 <body>
-  <main class="container-fluid d-flex flex-row p-0">
+  <main class="container-fluid d-flex flex-lg-row flex-column p-0">
     <?php include("../reusables/admin-sidebar.php"); ?>
     
-    <div class="col-10 p-4">
+    <div class="col-12 col-lg-10 p-2 p-lg-4">
       <h4 class="mb-4 fw-bold">IN-PROCESSING</h4>
-      <table id="example" class="display table" style="width:100%">
-        <thead>
-          <tr>
-            <th>Request ID</th>
-            <th>Client</th>
-            <th>Document Type</th>
-            <th>Date Requested</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-      </table>
+      <div class="table-responsive">
+        <table id="example" class="display table" style="width:100%">
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Client</th>
+              <th>Document Type</th>
+              <th>Date Requested</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      
     </div>
   </main>
   <script>
@@ -82,11 +85,18 @@
           { 
             data: 'request_id',
             title: 'Action',
-            render: function(data) {
-              return `
-                <a class='btn btn-sm btn-primary' href='view.php?request_id=${data}'>View</a>
-                <button class='btn btn-sm btn-success releaseButton' data-target='${data}'>Release</button>
-              `;
+            render: function(data, type, row) {
+              if(row.payment_status === "0"){
+                return `
+                  <a class='btn btn-sm btn-primary' href='view.php?request_id=${row.request_id}'>View</a>
+                  <button class='btn btn-sm btn-danger' disabled>UNPAID</button>
+                `;
+              }else {
+                return `
+                  <a class='btn btn-sm btn-primary' href='view.php?request_id=${row.request_id}'>View</a>
+                  <button class='btn btn-sm btn-success releaseButton' data-target='${row.request_id}'>Release</button>
+                `;
+              }
             }
           }
         ]

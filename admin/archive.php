@@ -13,23 +13,25 @@
 </head>
 <body>
 
-  <main class="container-fluid d-flex flex-row p-0">
+  <main class="container-fluid d-flex flex-lg-row flex-column p-0">
     <?php include("../reusables/admin-sidebar.php"); ?>
     
-    <div class="col-12 col-lg-10 p-4">
+    <div class="col-12 col-lg-10 p-2 p-lg-4">
       <h4 class="mb-4 fw-bold">ARCHIVES</h4>
-      <table id="example" class="table table-responsive">
-        <thead>
-          <tr>
-            <th>Request ID</th>
-            <th>Client</th>
-            <th>Document Type</th>
-            <th>Date Requested</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-      </table>
+      <div class="table-responsive">
+        <table id="example" class="table table-responsive">
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Client</th>
+              <th>Document Type</th>
+              <th>Date Requested</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
   </main>
   <script>
