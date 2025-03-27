@@ -111,7 +111,8 @@
         $mail->send();
         return true;
     } catch (Exception $e) {
-        return false; // Return false instead of exiting to handle errors better
+      echo $e;
+      return false; // Return false instead of exiting to handle errors better
     }
 }
 
