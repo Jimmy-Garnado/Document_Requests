@@ -9,7 +9,7 @@ $select = $conn->query("SELECT * FROM users WHERE stuid='$user_id' AND stupasswo
 
 if ($select->num_rows > 0) {
   $row = $select->fetch_assoc();
-  $email = $row['email'];
+  $email = $row['stuemail'];
 
   $otp = rand(100000, 999999);
   
