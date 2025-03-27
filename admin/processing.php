@@ -79,8 +79,25 @@
         columns: [
           { data: 'request_id', title: 'Request ID' },
           { data: 'client_name', title: 'Client' },
-          { data: 'document_type', title: 'Document Type' },
-          { data: 'request_date', title: 'Date Requested' },
+          {
+            data: 'document_type',
+            title: 'Document Type',
+            render: function(data) {
+              try {
+                let parsedData = JSON.parse(data);
+                return Array.isArray(parsedData) ? parsedData.join(', ') : data;
+              } catch (e) {
+                return data;
+              }
+            }
+          },
+          {
+            data: 'date_created',
+            title: 'Date Requested',
+            render: function(data) {
+              return moment(data).format("MMMM D, YYYY h:mmA");
+            }
+          },
           { data: 'status', title: 'Status' },
           { 
             data: 'request_id',

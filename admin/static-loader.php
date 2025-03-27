@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="../asset/sweetalert.js"></script>
 <script src="../asset/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
 <!-- For DataTable -->
 <link rel="stylesheet" href="../asset/datatables/dataTables.bootstrap5.min.css">

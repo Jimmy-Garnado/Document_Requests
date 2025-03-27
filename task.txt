@@ -10,18 +10,20 @@
 
 Enable students to request, validate requirements, and make payment (if requirements are needed).
 Implement registrar-controlled release date selection.
-Hide passwords for security (ALL USERS)
+✅ Hide passwords for security (ALL USERS)
 Include student data for CYS (Course, Year, Section).
-Manage requests that are not listed in the provided options.
+✅ Manage requests that are not listed in the provided options.
 Define the rule for "Number of Copies" (1:1 ratio or alternative).
-Add a verification process during STUDENT login
-Automatically detect the email using the Student ID
+✅ Add a verification process during STUDENT login
+✅ Automatically detect the email using the Student ID
 Ensure users are correctly identified and given default passwords.
-Format input validation
-Request date fix
+✅ Format input validation
+✅ Request date fix
 Upon release, track who picked up the document.
-Handle scenarios where an authorized representative picks up the document.
-REMOVE: Student date selector
+✅ Handle scenarios where an authorized representative picks up the document.
+✅ REMOVE: Student date selector
+Logs for cashier
+remove other document
 
 STUDENT
 11

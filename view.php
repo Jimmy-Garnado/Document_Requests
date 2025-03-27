@@ -69,7 +69,7 @@
         ?></h5>
         <h5>Price: <?php echo $row['price']; ?> PHP</h5>
         <h5>Approved By: <?php echo $row['assigned_staff']; ?></h5>
-        <h5>Date Requested: <?php echo date('M d, Y', strtotime($row['request_date'])) ; ?></h5>
+        <h5>Date Requested: <?php echo date('M d, Y', strtotime($row['date_created'])) ; ?></h5>
         <hr />
         <h3>Student Information</h3>
         <div class="row">

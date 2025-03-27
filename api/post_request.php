@@ -9,8 +9,6 @@
   $user = $conn -> query("SELECT * FROM users WHERE stuid='$stuid' LIMIT 1");
   $user = $user -> fetch_assoc();
 
-  
-
   $uniqueId = uniqid('R-', true);
   $shortenedId = substr($uniqueId, 0, 8);
   $finalId = strtoupper($shortenedId);
@@ -31,7 +29,35 @@
   $document_type = $_POST['document_type'];
   $academic_year = $_POST['academic_year'];
   $purpose = $_POST['purpose'];
-  $request_date = $_POST['request_date'];
+  $other_document = $_POST['other_document'] ?? "None";
+  $auth_person = "";
+  $auth_relationship = "";
+
+  if($_POST['pickupType'] !== "myself"){
+    $auth_person = $_POST['authorized_person'];
+    $auth_relationship = $_POST['authorized_relationship'];
+
+    $uploadDir = "../images/requests/$finalId/";
+    if (!is_dir($uploadDir)) {
+      mkdir($uploadDir, 0777, true);
+    }
+  
+    if (!empty($_FILES['authorized_id']['name'][0])) {
+      $responses = [];
+  
+      foreach ($_FILES['authorized_id']['tmp_name'] as $key => $tmp_name) {
+          $fileName = basename($_FILES['authorized_id']['name'][$key]);
+          $targetFile = $uploadDir . $fileName;
+  
+          // Move uploaded file to the folder
+          if (move_uploaded_file($tmp_name, $targetFile)) {
+              $responses[] = "Uploaded: $fileName";
+          } else {
+              $responses[] = "Failed: $fileName";
+          }
+      }
+    }
+  }
 
   $total_price = 0;
 
@@ -62,10 +88,12 @@
     document_type, 
     academic_year, 
     purpose, 
-    request_date, 
     price,
     date_created,
-    status
+    status,
+    other_documents,
+    authorized_person,
+    relationship
     )
   VALUES (
     '$client_name', 
@@ -83,10 +111,12 @@
     '$doc_json', 
     '$academic_year', 
     '$purpose', 
-    '$request_date', 
     $total_price,
     NOW(),
-    'Pending'
+    'Pending',
+    '$other_document',
+    '$auth_person',
+    '$auth_relationship'
   )";
 
   $list_of_document = implode(", ", $document_type);

@@ -9,13 +9,6 @@
 
   $document_type = $_POST['document_type'];
   echo "
-    <h4 class='fw-bold mb-4'>Request Details</h4>
-    <div class='row'>
-      <div class='col-4'>
-        <label class='fw-semibold'>Request Date</label>
-      </div>
-      <div class='col-8'>".$_POST['request_date']."</div>
-    </div>
     <div class='row'>
       <div class='col-4'>
         <label class='fw-semibold'>Student Number</label>
@@ -39,22 +32,22 @@
         <label class='fw-semibold'>Document Type</label>
       </div>
     </div>
-    <div class='row'>
     ";
     foreach($document_type as $doc_type ) {
       echo "
+    <div class='row'>
+
       <div class='col-2'>
           <input class='form-check-input' type='checkbox' value='".$doc_type."' checked disabled />
       
       </div>
       <div class='col-10'>
           <label class='form-check-label'>".$doc_type."</label>
-      
+    </div>
       </div>
        ";
     }
     echo "
-    </div>
     <div class='row'>
       <div class='col-4'>
         <label class='fw-semibold'>Academic Year</label>
@@ -67,7 +60,7 @@
       </div>
       <div class='col-8'>".$_POST['purpose']."</div>
     </div>
-    <h4 class='fw-bold mb-4 mt-4'>Contact And Address Details</h4>
+    <h5 class='fw-bold mb-4 mt-4'>Contact And Address Details</h5>
     <div class='row'>
       <div class='col-4'>
         <label class='fw-semibold'>Contact Number</label>

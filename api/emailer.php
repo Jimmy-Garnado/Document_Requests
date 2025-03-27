@@ -79,4 +79,40 @@
       exit();
     }
   }
+
+  function SendOTP($client_email, $otp) {
+    $mail = new PHPMailer(true);
+
+    try {
+        // Set up PHPMailer
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'bokwebmaster2000@gmail.com'; // Your Gmail address
+        $mail->Password = 'qxepkpgupfksvpfx'; // Your Gmail App Password
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+
+        $mail->setFrom('bokwebmaster2000@gmail.com', 'BPC Registrar');
+        $mail->addAddress($client_email);
+
+        // Email content
+        $mail->isHTML(true);
+        $mail->Subject = "Your One-Time Password (OTP)";
+        $mail->Body = '
+            <p>Dear User,</p>
+            <p>Your One-Time Password (OTP) for verification is: <strong>' . htmlspecialchars($otp) . '</strong></p>
+            <p>Please enter this OTP to proceed. It is valid for a limited time.</p>
+            <p>If you did not request this, please ignore this email.</p>
+            <p>Best regards,<br><strong>BPC Registrar</strong></p>
+        ';
+
+        // Send the email
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false; // Return false instead of exiting to handle errors better
+    }
+}
+
 ?>

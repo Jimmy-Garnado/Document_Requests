@@ -7,7 +7,8 @@
 
   $data = [];
   while ($row = $select_all->fetch_assoc()) {
-      $data[] = $row;
+    $row["stupassword"] = str_repeat('*', strlen($row["stupassword"])); // Mask password
+    $data[] = $row;
   }
   
   echo json_encode([

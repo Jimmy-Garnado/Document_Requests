@@ -68,7 +68,13 @@
         columns: [
           { data: 'request_id', title: 'Request ID' },
           { data: 'client_name', title: 'Client' },
-          { data: 'request_date', title: 'Request Date' },
+          {
+            data: 'date_created',
+            title: 'Date Requested',
+            render: function(data) {
+              return moment(data).format("MMMM D, YYYY h:mmA");
+            }
+          },
           { data: 'price', title: 'Amount' },
           { data: 'payment_status', title: 'Status', render: function(data, type, row){
             if(data == 0){

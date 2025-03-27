@@ -2,14 +2,16 @@
   include("connection.php");
   session_start();
 
-  $user_id = $_POST['user_id'];
-  $user_password = $_POST['user_password'];
-  $role_type = $_POST['role_type'];
+  $user_id = $_POST['user_id'] ?? ($_POST['stuid_v'] ?? null);
+  $user_password = $_POST['user_password'] ?? ($_POST['stupassword_v'] ?? null);
+  $role_type = $_POST['role_type'] ?? 'Student';
 
   $select = "";
 
   if($role_type === "Student"){
-    $select = $conn -> query("SELECT * FROM users WHERE stuid='$user_id' AND stupassword='$user_password' AND is_deleted=false LIMIT 1");
+    $otp = $_POST['otp'];
+
+    $select = $conn -> query("SELECT * FROM users WHERE stuid='$user_id' AND stupassword='$user_password' AND otp='$otp' AND is_deleted=false LIMIT 1");
 
     if($select -> num_rows > 0){
       $row = $select -> fetch_assoc();
@@ -19,13 +21,13 @@
   
       echo json_encode(array("status" => "success", "message" => "Successfully Logged In", "description" => "Redirecting to Dashhboard.", "role" => "Student"));
     }else {
-      echo json_encode(array("status" => "error", "message" => "Invalid Login Credential", "description" => "Please try again. Make sure your Student Id and Password are matched."));
+      echo json_encode(array("status" => "error", "message" => "Wrong Code", "description" => "You put the wrong otp. Page will refresh."));
     }
 
     exit();
   }
   
-  if($role_type !== "Student"){
+  if($_POST['role_type'] !== "Student"){
     $select = $conn -> query("SELECT * FROM staff WHERE username='$user_id' AND password='$user_password' AND role='$role_type' LIMIT 1");
 
     if($select -> num_rows > 0){

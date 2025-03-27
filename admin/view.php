@@ -1,22 +1,21 @@
 <?php
-  session_start();
+session_start();
 
-  if(!isset($_GET['request_id'])){
-    header("location: request.php");
-  }else {
-    include("api/connection.php");
+if (!isset($_GET['request_id'])) {
+  header("location: request.php");
+} else {
+  include("api/connection.php");
 
-    $requestID = $_GET['request_id'];
+  $requestID = $_GET['request_id'];
 
-    $select = $conn -> query("SELECT * FROM requests WHERE request_id='$requestID' LIMIT 1");
-    $row = $select -> fetch_assoc();
-
-    $conn -> close();
-  }
+  $select = $conn->query("SELECT * FROM requests WHERE request_id='$requestID' LIMIT 1");
+  $row = $select->fetch_assoc();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,114 +25,145 @@
   <link rel="stylesheet" href="../asset/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="../asset/css/main-style.css">
 </head>
+
 <body>
-  
+
   <style>
     main {
       min-height: 100vh;
     }
 
-    section > div {
+    section>div {
       background-color: #fff;
       padding: 2rem 4rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
     }
 
+    .client-profile {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .client-profile>img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
   </style>
 
   <main class="container-fluid d-flex flex-row p-0">
     <?php include("../reusables/admin-sidebar.php"); ?>
-    <section class="col-10">
-      <div>
-        <h5>Viewing Request: <?php echo $requestID; ?></h5>
-        <h5>Document: <?php echo $row['document_type']; ?></h5>
-        <h5>Client: <?php echo $row['client_name']; ?></h5>
-        <h5>Status: <?php echo $row['status']; ?></h5>
-        <?php 
-          if($row['status'] === "Rejected"){
-            echo "<h5>Reason: ".$row['reject_reason']."</h5>";
+    <section class="d-flex flex-row col-10">
+      <div class="d-flex flex-column gap-2 col-6">
+        <h5>Request Details</h5>
+        <div class="row">
+          <div class="col-4 fw-semibold">ID</div>
+          <div class="col-8"><?php echo $row['request_id']; ?></div>
+        </div>
+        <div class="row">
+          <div class="col-4 fw-semibold">Program/Course</div>
+          <div class="col-8"><?php echo $row['program_degree']; ?></div>
+        </div>
+        <div class="row">
+          <div class="col-4 fw-semibold">Academic Year</div>
+          <div class="col-8"><?php echo $row['academic_year']; ?></div>
+        </div>
+        <h5 class="mt-4">Requested Documents</h5>
+        <?php
+        $documents = json_decode($row['document_type'], true); // Decode JSON string to an array
+
+        if (!empty($documents)) {
+          echo "<ul>"; // Start unordered list
+          foreach ($documents as $document) {
+            echo "<li>" . htmlspecialchars($document) . "</li>"; // List item for each document
           }
+          echo "</ul>"; // End unordered list
+        } else {
+          echo "<p>No documents</p>";
+        }
         ?>
-        <h5>Date Requested: <?php echo $row['request_date']; ?></h5>
-        <hr />
-        <h3>Student Information</h3>
+
+        <h5 class="mt-4">Other Document</h5>
+        <p><?php echo $row['other_documents']; ?></p>
+
+        <h5 class="mt-4">Transaction Detail</h5>
         <div class="row">
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Student Number</label>
-            <input type="text" class="form-control" placeholder="04-0001-2627" value="<?php echo $row['student_number']; ?>" readonly>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Program</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected><?php echo $row['program_degree']; ?></option>
-            </select>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Year Graduated</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected><?php echo $row['year_graduated']; ?></option>
-            </select>
-          </div>
-        </div>
-        <!-- <h3 class="mt-4">Address & Contact Information</h3>
-        <div class="row">
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Email Address</label>
-            <input type="text" class="form-control" placeholder="j.delacruz@gmail.com" value="<?php echo $row['client_email']; ?>" readonly>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Contact Number</label>
-            <input type="text" class="form-control" placeholder="09762220955" value="<?php echo $row['client_contact_number1']; ?>" readonly>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Alternate Contact Number</label>
-            <input type="text" class="form-control" placeholder="09304696712" value="<?php echo $row['client_contact_number2']; ?>" readonly>
-          </div>
+          <div class="col-4 fw-semibold">Assigned Staff</div>
+          <div class="col-8">
+            <?php if ($row['assigned_staff'] === "") {
+              echo "No Assigned Staff";
+            } else {
+              echo $row['assigned_staff'];
+            } ?></div>
         </div>
         <div class="row">
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Block/House/Building Number</label>
-            <input type="text" class="form-control" placeholder="Building 37" value="<?php echo $row['house_number']; ?>" readonly>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Street Name</label>
-            <input type="text" class="form-control" placeholder="Nakpil St" value="<?php echo $row['street_name']; ?>" readonly>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Barangay</label>
-            <input type="text" class="form-control" placeholder="Isidro" value="<?php echo $row['barangay']; ?>" readonly>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Municipality/City</label>
-            <input type="text" class="form-control" placeholder="Pampanga" value="<?php echo $row['city']; ?>" readonly>
-          </div>
-        </div> -->
-        <h3 class="mt-4">Request Details</h3>
+          <div class="col-4 fw-semibold">Payment Status</div>
+          <div class="col-8">
+            <?php if ($row['payment_status'] !== 0) {
+              echo "Not Paid";
+            } else {
+              echo "Paid";
+            } ?></div>
+        </div>
         <div class="row">
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Document Type</label>
-            <select class="form-select">
-              <option selected><?php echo $row['document_type']; ?></option>
-            </select>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Academic Year</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected><?php echo $row['academic_year']; ?></option>
-            </select>
-          </div>
-          <div class="col-3">
-            <label for="exampleInputPassword1" class="form-label">Purpose</label>
-            <input type="text" class="form-control" placeholder="For employment" value="<?php echo $row['purpose']; ?>" readonly>
-          </div>
+          <div class="col-4 fw-semibold">Status</div>
+          <div class="col-8"><?php echo $row['status']; ?></div>
+        </div>
+        <div class="row">
+          <div class="col-4 fw-semibold">Date Requested</div>
+          <div class="col-8"><?php echo date("F j, Y g:iA", strtotime($row['date_created'])); ?></div>
+        </div>
+      </div>
+      <div class="col-6 client-profile">
+        <?php
+        $client = $conn->query("SELECT * FROM users WHERE stuname='" . $row['client_name'] . "' LIMIT 1");
+        $client = $client->fetch_assoc();
+        ?>
+        <h5>Client Profile</h5>
+        <img class="img-fluid" src="../<?php echo $client['image_url']; ?>" />
+        <p><?php echo $row['client_name']; ?></p>
+        <p><?php echo $client['stuemail']; ?></p>
+        <p><?php echo $client['contact_number']; ?></p>
+
+        <h5 class="mt-4">Address Line</h5>
+        <p><?php echo $client['street']; ?>, <?php echo $client['barangay']; ?>, <?php echo $client['city']; ?>, <?php echo $client['province']; ?></p>
+        
+        <?php
+          if($row['authorized_person'] !== ""){
+            echo "<h5 class='mt-4'>Authorized Person</h5>";
+            echo "<p>".$row['authorized_person']."</p>";
+            echo "<p>".$row['relationship']."</p>";
+
+            $directory = "../images/requests/$requestID/";
+
+            echo "<h5 class='mt-4'>Authorized ID</h5>";
+            if (is_dir($directory)) {
+                $files = glob($directory . "*.{jpg,jpeg,png,gif}", GLOB_BRACE); // Get image files
+                
+                if (!empty($files)) {
+                    echo "<div class='d-flex flex-wrap gap-2'>";
+                    foreach ($files as $file) {
+                        echo "<img src='$file' class='img-thumbnail' style='width: 150px; height: auto;'>";
+                    }
+                    echo "</div>";
+                } else {
+                    echo "<p>No images uploaded.</p>";
+                }
+            } else {
+                echo "<p>No images found.</p>";
+            }
+          }
+          
+        ?>
         </div>
       </div>
     </section>
   </main>
   <script>
-    
+
   </script>
 </body>
+
 </html>
