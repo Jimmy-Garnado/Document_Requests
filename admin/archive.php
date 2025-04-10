@@ -42,7 +42,7 @@
             { data: 'request_id', title: 'Request ID' },
             { data: 'client_name', title: 'Client' },
             { data: 'document_type', title: 'Document Type' },
-            { data: 'request_date', title: 'Date Requested' },
+            { data: 'date_created', title: 'Date Requested' },
             { data: 'status', title: 'Status' },
             { 
               data: 'request_id',

@@ -73,15 +73,16 @@
   <h2 class="mt-4 mb-4 align-self-center text-white ">Menu</h2>
   <a href="request.php">
     <i class="fa-regular fa-file"></i>
-    <span>Request</span>
+    <span>Request Document</span>
   </a>
-  <a href="my-request.php">
+
+  <a href="v2-request.php">
     <i class="fa-regular fa-file"></i>
-    <span>My Requests</span>
+    <span>V2 Request Document</span>
   </a>
   <a href="profile.php">
     <i class="fa-regular fa-user"></i>
-    <span>Profile</span>
+    <span>Account</span>
   </a>
   <a class="logoutButton">
     <i class="fa-solid fa-power-off"></i>

@@ -20,7 +20,7 @@
     <?php include("../reusables/admin-sidebar.php"); ?>
     
     <div class="col-10 p-4">
-      <h4 class="mb-4 fw-bold">CASHIER</h4>
+      <h4 class="mb-4 fw-bold">Cashier</h4>
       <table id="example" class="display table" style="width:100%">
         <thead>
           <tr>
@@ -29,7 +29,6 @@
             <th>Date Requested</th>
             <th>Amount</th>
             <th>Status</th>
-            <th>Action</th>
           </tr>
         </thead>
       </table>
@@ -66,7 +65,13 @@
       $('#example').DataTable({
         ajax: 'api/get_all_cashier_request.php',
         columns: [
-          { data: 'request_id', title: 'Request ID' },
+          {
+            data: 'request_id',
+            title: 'Request ID',
+            render: function(data, type, row) {
+              return '<a href="view.php?request_id=' + data + '">' + data + '</a>';
+            }
+          },
           { data: 'client_name', title: 'Client' },
           {
             data: 'date_created',
@@ -86,22 +91,7 @@
                 <span class='badge bg-success'>PAID</span>
               `
             }
-          } },
-          { 
-            data: 'request_id',
-            title: 'Action',
-            render: function(data, type, row) {
-              if(row.payment_status == 0){
-                return `
-                  <button class='btn btn-sm btn-success pay-button' data-target='${data}'>Process Payment</button>
-                `;
-              }else {
-                return `
-                  
-                `;
-              }
-            }
-          }
+          } }
         ]
       });
     })

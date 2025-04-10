@@ -148,23 +148,27 @@
         <?php
         if ($_SESSION['staffrole'] === "Staff") {
           echo "
-      <a class='nav-link' href='request.php'>
-        <i class='fa-regular fa-file'></i>
-        <span>REQUEST</span>
-      </a>
-      <a class='nav-link' href='processing.php'>
-        <i class='fa-regular fa-file'></i>
-        <span>IN-PROCESSING</span>
-      </a>
-      <a class='nav-link' href='archive.php'>
-        <i class='fa-regular fa-file'></i>
-        <span>ARCHIVES</span>
-      </a>
-      <a class='nav-link' href='supported_documents.php'>
-        <i class='fa-solid fa-gear'></i>
-        <span>SUPPORTED DOCUMENTS</span>
-      </a>
-      ";
+          <a class='nav-link' href='request.php'>
+            <i class='fa-regular fa-file'></i>
+            <span>Document Request</span>
+          </a>
+          <a class='nav-link' href='processing.php'>
+            <i class='fa-regular fa-file'></i>
+            <span>In-Process</span>
+          </a>
+          <a class='nav-link' href='for-release.php'>
+            <i class='fa-regular fa-file'></i>
+            <span>For Release</span>
+          </a>
+          <a class='nav-link' href='archive.php'>
+            <i class='fa-regular fa-file'></i>
+            <span>Archive</span>
+          </a>
+          <a class='nav-link' href='supported_documents.php'>
+            <i class='fa-solid fa-gear'></i>
+            <span>Document Types</span>
+          </a>
+          ";
         }
         ?>
 
@@ -178,10 +182,10 @@
       ";
         }
         ?>
-          <a class="nav-link logoutButton">
-            <i class="fa-solid fa-power-off mr-4"></i>
-            <span>Log Out</span>
-          </a>
+        <a class="nav-link logoutButton">
+          <i class="fa-solid fa-power-off mr-4"></i>
+          <span>Log Out</span>
+        </a>
       </ul>
     </div>
   </div>
@@ -199,19 +203,19 @@
     echo "
       <a href='request.php'>
         <i class='fa-regular fa-file'></i>
-        <span>REQUEST</span>
+        <span>Requests</span>
       </a>
       <a href='staffs.php'>
         <i class='fa-regular fa-user'></i>
-        <span>STAFF</span>
+        <span>Staffs</span>
       </a>
       <a href='students.php'>
         <i class='fa-regular fa-user'></i>
-        <span>STUDENT</span>
+        <span>Students</span>
       </a>
       <a href='content_management.php'>
         <i class='fa-solid fa-gear'></i>
-        <span>CONTENT MANAGEMENT</span>
+        <span>CMS</span>
       </a>
       ";
   }
@@ -222,19 +226,23 @@
     echo "
       <a href='request.php'>
         <i class='fa-regular fa-file'></i>
-        <span>REQUEST</span>
+        <span>Requests</span>
       </a>
       <a href='processing.php'>
         <i class='fa-regular fa-file'></i>
-        <span>IN-PROCESSING</span>
+        <span>In-Processing</span>
+      </a>
+      <a href='for-release.php'>
+        <i class='fa-regular fa-file'></i>
+        <span>For Release</span>
       </a>
       <a href='archive.php'>
         <i class='fa-regular fa-file'></i>
-        <span>ARCHIVES</span>
+        <span>Archive</span>
       </a>
       <a href='supported_documents.php'>
         <i class='fa-solid fa-gear'></i>
-        <span>SUPPORTED DOCUMENTS</span>
+        <span>Document Types</span>
       </a>
       ";
   }
@@ -245,7 +253,11 @@
     echo "
         <a href='cashier.php'>
           <i class='fa-regular fa-file'></i>
-          <span>CASHIER</span>
+          <span>Cashier</span>
+        </a>
+        <a href='payment-logs.php'>
+          <i class='fa-solid fa-receipt'></i>
+          <span>Payment Logs</span>
         </a>
       ";
   }
@@ -261,7 +273,7 @@
   </a> -->
   <a class="logoutButton">
     <i class="fa-solid fa-power-off"></i>
-    <span>LOG OUT</span>
+    <span>Log Out</span>
   </a>
 
   <h6><?php echo $CONTENT['system_name']; ?></h6>

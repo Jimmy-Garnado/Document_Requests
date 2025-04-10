@@ -1,6 +1,13 @@
 <?php
   date_default_timezone_set('Asia/Manila');
 
+  // FOR LOCAL
+  // $servername = "localhost";
+  // $username = "root";
+  // $password = "";
+  // $database = "bpc";
+
+  // FOR REMOTE
   $servername = "localhost";
   $username = "root";
   $password = "";

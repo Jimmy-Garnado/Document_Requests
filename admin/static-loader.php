@@ -1,7 +1,7 @@
 <?php
-
   if (!isset($_SESSION['staffid']) && !isset($_SESSION['staffrole'])) {
     session_destroy();
+
     header("location: index.html");
     exit();
   }

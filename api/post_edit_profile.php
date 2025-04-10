@@ -2,7 +2,6 @@
   include("connection.php");
 
   $stuid = $_POST['stuid'];
-  $stupassword = $_POST['stupassword'];
   $contact_number = $_POST['contact_number'];
   $email = $_POST['email'];
   $street = $_POST['street'];
@@ -11,7 +10,6 @@
   $province = $_POST['province'];
 
   $update = $conn -> query("UPDATE users SET 
-    stupassword='$stupassword',
     contact_number='$contact_number',
     email='$email',
     street='$street',

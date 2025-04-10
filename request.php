@@ -160,10 +160,6 @@
             ?>
           </div>
           <div class="form-group mt-4">
-            <p style="font-size: 16px;" class="fw-semibold">If the document you need is not listed above, please specify it in the textbox below.</p>
-            <input type="text" class="form-control mt-2" name="other_document" placeholder="Enter document names (e.g) Form 137, Official Receipt">
-          </div>
-          <div class="form-group mt-4">
             <label class="form-label fw-semibold">ACADEMIC YEAR</label>
             <select class="form-select" aria-label="Default select example" name="academic_year">
               <option value="2015">2015</option>
