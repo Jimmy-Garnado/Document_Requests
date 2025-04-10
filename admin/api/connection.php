@@ -8,10 +8,10 @@
   // $database = "bpc";
 
   // FOR REMOTE
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $database = "bpc";
+  $servername = "194.59.164.68";
+  $username = "u994347109_bpc_username";
+  $password = "tY;W2HWxmK/9";
+  $database = "u994347109_bpc_main";
 
   $conn = new mysqli($servername, $username, $password, $database);
 
