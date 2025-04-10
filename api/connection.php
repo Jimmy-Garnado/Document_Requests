@@ -8,7 +8,7 @@
   // $database = "bpc";
 
   // FOR REMOTE
-  $servername = "194.59.164.63";
+  $servername = "194.59.164.68";
   $username = "u994347109_bpc_username";
   $password = "tY;W2HWxmK/9";
   $database = "u994347109_bpc_main";
