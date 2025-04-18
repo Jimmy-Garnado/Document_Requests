@@ -30,7 +30,6 @@ if ($_SESSION['staffrole'] != "Cashier") {
             <th>Client</th>
             <th>Date Requested</th>
             <th>Amount</th>
-            <th>Status</th>
           </tr>
         </thead>
       </table>
@@ -40,7 +39,7 @@ if ($_SESSION['staffrole'] != "Cashier") {
   <script>
     $(document).ready(function() {
       $('#example').DataTable({
-        ajax: 'api/get_all_payment_logs.php',
+        ajax: 'api/get-all.php?table=payment_logs',
         columns: [{
             data: 'request_id',
             title: 'Request ID',
@@ -49,17 +48,14 @@ if ($_SESSION['staffrole'] != "Cashier") {
             }
           },
           {
-            data: 'client'
+            data: 'client_id'
           },
           {
             data: 'payment_date'
           },
           {
             data: 'amount'
-          },
-          {
-            data: 'status'
-          },
+          }
         ]
       });
     });

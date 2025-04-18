@@ -72,7 +72,7 @@
               return '<a href="view.php?request_id=' + data + '">' + data + '</a>';
             }
           },
-          { data: 'client_name', title: 'Client' },
+          { data: 'name', title: 'Client' },
           {
             data: 'date_created',
             title: 'Date Requested',
@@ -80,9 +80,9 @@
               return moment(data).format("MMMM D, YYYY h:mmA");
             }
           },
-          { data: 'price', title: 'Amount' },
+          { data: 'total_price', title: 'Amount' },
           { data: 'payment_status', title: 'Status', render: function(data, type, row){
-            if(data == 0){
+            if(data == "Not Paid"){
               return `
                 <span class='badge bg-danger'>UNPAID</span>
               `

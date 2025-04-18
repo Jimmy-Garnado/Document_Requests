@@ -20,15 +20,26 @@
 ✅ Logs for cashier
 ✅ remove other document
 
-Define the rule for "Number of Copies" (1:1 ratio or alternative).
+✅ Define the rule for "Number of Copies" (1:1 ratio or alternative).
 ✅ Enable students to request, validate requirements, and make payment (if requirements are needed).
 ✅ Include student data for CYS (Course, Year, Section).
 ✅ Upon release, track who picked up the document.
 
+u994347109_bpc_main
+u994347109_bpc_username
+tY;W2HWxmK/9
 
-STUDENT
-11
-*^8R7A5|UR.=
+Name: documentrequest05@gmail.com
+Pass: @documentrequest2025
 
-2
-2
+EMAIL
+support@bpceregistrar.online
+fA5X07~:JT$
+
+smtp.hostinger.com
+
+USERNAME	    PASSWORD
+MA21012191	  arieljericko
+bpc-admin	    @bpcadmin123
+bpc-cashier	  @bpccashier123
+bpc-staff	    @bpcstaff123

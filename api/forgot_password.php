@@ -1,6 +1,6 @@
 <?php
   include("connection.php");
-  include("emailer.php");
+  include_once "../module/emailer.php";
 
   function generateRandomString($length = 12) {
     $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

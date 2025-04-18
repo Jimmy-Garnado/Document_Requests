@@ -27,7 +27,6 @@
               <th>Document Type</th>
               <th>Date Requested</th>
               <th>Status</th>
-              <th>Action</th>
             </tr>
           </thead>
         </table>
@@ -37,22 +36,36 @@
   <script>
     $(document).ready(function(){
       $('#example').DataTable({
-          ajax: 'api/get_all_archived.php',
+          ajax: 'api/get-all.php?table=v2_requests&where=["Rejected", "Completed", "Cancelled"]',
           columns: [
-            { data: 'request_id', title: 'Request ID' },
-            { data: 'client_name', title: 'Client' },
-            { data: 'document_type', title: 'Document Type' },
-            { data: 'date_created', title: 'Date Requested' },
-            { data: 'status', title: 'Status' },
-            { 
-              data: 'request_id',
-              title: 'Action',
-              render: function(data) {
-                return `
-                  <a class='btn btn-sm btn-primary' href='view.php?request_id=${data}'>View</a>
-                `;
-              }
+            {
+            data: 'request_id',
+            title: 'Request ID',
+            render: function(data, type, row) {
+              return '<a href="view.php?request_id=' + data + '">' + data + '</a>';
             }
+          },
+            { data: 'name', title: 'Client' },
+            {
+          data: 'document_to_request',
+          title: 'Document Type',
+          render: function (data) {
+            try {
+              let parsedData = JSON.parse(data);
+              return Array.isArray(parsedData) ? parsedData.join(', ') : data;
+            } catch (e) {
+              return data;
+            }
+          }
+        },
+        {
+          data: 'date_created',
+          title: 'Date Requested',
+          render: function (data) {
+            return moment(data).format("MMMM D, YYYY h:mmA");
+          }
+        },
+            { data: 'status', title: 'Status' }
           ]
       });
     })

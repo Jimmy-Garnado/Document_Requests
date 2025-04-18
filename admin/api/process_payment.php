@@ -1,6 +1,5 @@
 <?php
 include 'connection.php';
-
 require '../../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -11,17 +10,16 @@ function SendEmailConfirmation($client_email, $request_id, $transaction_number, 
   $mail = new PHPMailer(true);
 
   try {
-    // Set up PHPMailer
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = 'smtp.hostinger.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'bokwebmaster2000@gmail.com'; // Your Gmail address
-    $mail->Password = 'qxepkpgupfksvpfx'; // Your Gmail App Password
+    $mail->Username = 'support@bpceregistrar.online';
+    $mail->Password = 'fA5X07~:JT$';
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
+    $mail->isHTML(true);
+    $mail->setFrom('support@bpceregistrar.online', 'BPC E-Registrar');
 
-    // Set the sender and recipient
-    $mail->setFrom('bokwebmaster2000@gmail.com', 'BPC Registrar');
 
     $mail->addAddress($client_email);
 
@@ -51,7 +49,6 @@ function SendEmailConfirmation($client_email, $request_id, $transaction_number, 
     return true;
   } catch (Exception $e) {
     return false;
-    exit();
   }
 }
 
@@ -105,26 +102,26 @@ function process_payment($request_id, $file, $transaction_number, $payment_date)
 
   global $conn;
 
-  $paymentStatus = 1;
+  $paymentStatus = "Paid";
 
-  $stmt = $conn->prepare("UPDATE requests SET payment_status = ? WHERE request_id = ?");
-  $stmt->bind_param("ii", $paymentStatus, $request_id);
+  $stmt = $conn->prepare("UPDATE v2_requests SET payment_status = ? WHERE request_id = ?");
+  $stmt->bind_param("si", $paymentStatus, $request_id);
 
   if ($stmt->execute()) {
-    $getClientStmt = $conn->prepare("SELECT client_email, client_id, price FROM requests WHERE request_id = ?");
+    $getClientStmt = $conn->prepare("SELECT email, student_id, total_price FROM v2_requests WHERE request_id = ?");
     $getClientStmt->bind_param("i", $request_id);
     $getClientStmt->execute();
     $getClientStmt->store_result();
 
     if ($getClientStmt->num_rows > 0) {
-      $getClientStmt->bind_result($client_email, $client_id, $price);
+      $getClientStmt->bind_result($email, $student_id, $total_price);
       $getClientStmt->fetch();
 
-      $amount = $price;
-      $email = $client_email;
+      $amount = $total_price;
+      $client_id = $student_id;
 
       $logStmt = $conn->prepare("INSERT INTO payment_logs (transaction_number, request_id, payment_date, amount, client_id) VALUES (?, ?, ?, ?, ?)");
-      $logStmt->bind_param("sssdi", $transaction_number, $request_id, $payment_date, $amount, $client_id);
+      $logStmt->bind_param("sssds", $transaction_number, $request_id, $payment_date, $amount, $client_id);
 
 
 

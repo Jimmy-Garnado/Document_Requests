@@ -1,6 +1,6 @@
 <?php
 include("connection.php");
-include("emailer.php");
+include("../module/emailer.php");
 
 function getRedirectLocation($role)
 {

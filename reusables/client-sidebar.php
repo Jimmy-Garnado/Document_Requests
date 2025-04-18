@@ -15,11 +15,9 @@
     align-items: center;
     gap: 0.75rem;
   }
-
   .sidebar > a:hover {
     background-color: #073000;
   }
-
   .sidebar {
     display: flex;
     flex-direction: column;
@@ -28,29 +26,24 @@
     top: 0;
     left: 0;
   }
-
   .sidebar > img {
     margin-top: 2rem;
   }
-
   .sidebar > h6 {
     color: #fff;
     margin-top: 1rem;
     text-align: center;
   }
-
   #mobile-header {
     background-color: #073000;
     color: #fff;
   }
-
   .navbar-brand {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
     color: #fff;
   }
-
   .nav-link {
     color: #fff;
     font-size: 18px;
@@ -60,7 +53,6 @@
     gap: 1rem;
     align-items: center;
   }
-
   .navbar-toggler {
     border-radius: 4px;
     background-color: #fff;
@@ -71,14 +63,13 @@
 <div class="sidebar col-2">
   <img src="images/bpc-logo.png" width="120px" height="120px" class="align-self-center">
   <h2 class="mt-4 mb-4 align-self-center text-white ">Menu</h2>
-  <a href="request.php">
+  <!-- <a href="request.php">
     <i class="fa-regular fa-file"></i>
     <span>Request Document</span>
-  </a>
-
+  </a> -->
   <a href="v2-request.php">
     <i class="fa-regular fa-file"></i>
-    <span>V2 Request Document</span>
+    <span>Request Document</span>
   </a>
   <a href="profile.php">
     <i class="fa-regular fa-user"></i>
@@ -93,29 +84,30 @@
 </div>
 
 <nav class="navbar d-lg-none" id="mobile-header">
-  <div class="container-fluid">
+  <div class="container-fluid p-2">
+    <img src="images/bpc-logo.png" width="48px" height="48px">
     <a class="navbar-brand" href="request.php">BPC E-Registrar 2024</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mobileMenu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="request.php">
             <i class="fa-regular fa-file mr-4"></i>
-            <span>Request</span>
+            <span>Request Document</span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="my-request.php">
+          <a class="nav-link" href="v2-request.php">
             <i class="fa-regular fa-file mr-4"></i>
-            <span>My Requests</span>
+            <span>Request Document</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="profile.php">
             <i class="fa-regular fa-user mr-4"></i>
-            <span>Profile</span>
+            <span>Account</span>
           </a>
         </li>
         <li class="nav-item">

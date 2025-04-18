@@ -205,7 +205,7 @@ include_once("api/connection.php");
 
     $(document).ready(function () {
       $('#example').DataTable({
-        ajax: 'api/get_all_processing.php',
+        ajax: 'api/get-all.php?table=v2_requests&where=Processing',
         columns: [{
             data: 'request_id',
             title: 'Request ID',
@@ -214,11 +214,11 @@ include_once("api/connection.php");
             }
           },
         {
-          data: 'client_name',
+          data: 'name',
           title: 'Client'
         },
         {
-          data: 'document_type',
+          data: 'document_to_request',
           title: 'Document Type',
           render: function (data) {
             try {

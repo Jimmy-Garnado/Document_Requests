@@ -9,8 +9,8 @@
     return $randomPassword;
   }
   
-  include("mailer.php");
   include("connection.php");
+  include("../../module/emailer.php");
 
   $stuid = $_POST['a_stuid'];
   $stuname = $_POST['a_stuname'];

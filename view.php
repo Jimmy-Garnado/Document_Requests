@@ -6,7 +6,7 @@ if (!isset($_GET['r'])) {
 
   $requestID = $_GET['r'];
 
-  $select = $conn->query("SELECT * FROM requests WHERE request_id='$requestID' LIMIT 1");
+  $select = $conn->query("SELECT * FROM v2_requests WHERE request_id='$requestID' LIMIT 1");
   $row = $select->fetch_assoc();
 
   $conn->close();
@@ -30,6 +30,20 @@ if (!isset($_GET['r'])) {
       min-height: 100vh;
     }
 
+    .preview {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .preview img {
+      width: 100%;
+      /* Make images responsive */
+      height: auto;
+      max-height: 200px;
+      object-fit: cover;
+    }
+
     section>div {
       background-color: #fff;
       padding: 1rem;
@@ -44,9 +58,54 @@ if (!isset($_GET['r'])) {
         display: none;
       }
     }
+
+    .attachment {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+    }
+
+    .attachment-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .attachment-text {
+      background-color: black;
+      color: white;
+      font-size: 12px;
+      padding: 5px;
+    }
   </style>
 
   <main class="container-fluid d-flex flex-lg-row flex-column p-0">
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="processPaymentModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="processPaymentModalLabel">Upload Attachments</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="uploadForm">
+            <div class="modal-body">
+              <input type="hidden" name="request_id" value="<?php echo $requestID; ?>">
+              <input type="file" name="to_upload[]" class="form-control" id="authImages" multiple accept="image/*">
+              <div class="preview">
+
+              </div>
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
     <?php include("reusables/client-sidebar.php"); ?>
     <section class="col-12 col-lg-10">
       <style>
@@ -56,32 +115,90 @@ if (!isset($_GET['r'])) {
           gap: 1rem;
         }
       </style>
+      <?php if ($row['status'] !== 'Cancelled'): ?>
+        <div class="py-0 pt-3">
+          <button id="cancelButton" class="btn btn-danger">
+            <i class="fas fa-times-circle"></i> Cancel
+          </button>
+          <button class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#uploadModal'>
+            <i class="fas fa-upload"></i> Upload Attachments
+          </button>
+        </div>
 
+      <?php endif; ?>
       <div class="grid-2-col">
-        <!-- Left Grid: Request Details -->
         <div>
           <div class="card mb-3">
             <div class="card-header">
-              <h5>Client Information</h5>
+              <h5>Information</h5>
             </div>
             <div class="card-body">
-              <p><strong>Name:</strong> <?php echo $row['client_name']; ?></p>
-              <p><strong>Email:</strong> <?php echo $row['client_email']; ?></p>
-              <p><strong>Primary Contact:</strong> <?php echo $row['client_contact_number1']; ?></p>
-              <p><strong>Alternate Contact:</strong> <?php echo $row['client_contact_number2']; ?></p>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Name:</strong></div>
+                <div class="col-md-7"><?php echo $row['name']; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Email:</strong></div>
+                <div class="col-md-7"><?php echo $row['email']; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Sex:</strong></div>
+                <div class="col-md-7"><?php echo $row['sex']; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Birthdate:</strong></div>
+                <div class="col-md-7"><?php echo date('F d, Y', strtotime($row['birthday'])); ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Course:</strong></div>
+                <div class="col-md-7"><?php echo $row["student_course"]; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Date of Graduation:</strong></div>
+                <div class="col-md-7"><?php echo date('F d, Y', strtotime($row['date_of_graduation'])); ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Permanent Address:</strong></div>
+                <div class="col-md-7"><?php echo $row['permanent_address']; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Contact Number:</strong></div>
+                <div class="col-md-7"><?php echo $row['contact_number']; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>School Last Attended (SLA):</strong></div>
+                <div class="col-md-7"><?php echo $row['school_last_attended']; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Year Completed (SLA):</strong></div>
+                <div class="col-md-7">
+                  <?php echo date('F d, Y', strtotime($row['school_last_attended_completed_date'])); ?>
+                </div>
+              </div>
             </div>
           </div>
-
           <div class="card mb-3">
             <div class="card-header">
               <h5>Request Details</h5>
             </div>
             <div class="card-body">
-              <p><strong>Documents:</strong> <?php echo implode(", ", json_decode($row['document_type'])); ?></p>
-              <p><strong>Purpose:</strong> <?php echo $row['purpose']; ?></p>
-              <p><strong>Academic Year:</strong> <?php echo $row['academic_year']; ?></p>
-              <p><strong>Price:</strong> <?php echo number_format($row['price'], 2, '.', ','); ?> PHP</p>
-              <p><strong>Date Requested:</strong> <?php echo date('M d, Y', strtotime($row['date_created'])); ?></p>
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Requested Documents:</strong></div>
+                <div class="col-md-8"><?php echo implode(", ", json_decode($row['document_to_request'])); ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Request Purpose:</strong></div>
+                <div class="col-md-8"><?php echo $row['request_purpose']; ?></div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Total Price:</strong></div>
+                <div class="col-md-8"><?php echo number_format($row['total_price'], 2, '.', ','); ?> PHP</div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Date Requested:</strong></div>
+                <div class="col-md-8"><?php echo date('M d, Y', strtotime($row['date_created'])); ?></div>
+              </div>
             </div>
           </div>
 
@@ -91,7 +208,7 @@ if (!isset($_GET['r'])) {
             </div>
             <div class="card-body">
               <?php
-              $document_type = json_decode($row['document_type']);
+              $document_type = json_decode($row['document_to_request']);
               foreach ($document_type as $doc_type) {
                 echo "<div class='form-check'>
                   <input class='form-check-input' type='checkbox' checked disabled>
@@ -110,29 +227,56 @@ if (!isset($_GET['r'])) {
               <h5>Status</h5>
             </div>
             <div class="card-body">
-              <p><strong>Status:</strong> <?php echo $row['status']; ?></p>
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Status:</strong></div>
+                <div class="col-md-8"><?php echo $row['status']; ?></div>
+              </div>
+
               <?php if ($row['status'] === "Rejected"): ?>
-                <p><strong>Reason:</strong> <?php echo $row['reject_reason']; ?></p>
+                <div class="row mb-2">
+                  <div class="col-md-4"><strong>Reason:</strong></div>
+                  <div class="col-md-8"><?php echo $row['reject_reason']; ?></div>
+                </div>
               <?php endif; ?>
-              <p><strong>Payment Status:</strong>
-                <?php echo $row['payment_status'] == false
-                  ? "<span class='badge bg-danger'>UNPAID</span>"
-                  : "<span class='badge bg-success'>PAID</span>"; ?>
-              </p>
-              <p><strong>Approved By:</strong> <?php echo $row['assigned_staff']; ?></p>
-            </div>
-          </div>
 
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Payment Status:</strong></div>
+                <div class="col-md-8">
+                  <?php
+                  echo $row['payment_status'] === "Not Paid"
+                    ? "<span class='badge bg-danger'>Unpaid</span>"
+                    : "<span class='badge bg-success'>Paid</span>";
+                  ?>
+                </div>
+              </div>
 
+              <!-- Pickup Type Row -->
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Pickup Type:</strong></div>
+                <div class="col-md-8">
+                  <?php echo strtoupper($row['pickup_type']); ?>
+                </div>
+              </div>
 
-          <div class="card mb-3">
-            <div class="card-header">
-              <h5>Address</h5>
-            </div>
-            <div class="card-body">
-              <p><strong>Street:</strong> <?php echo $row['street_name']; ?></p>
-              <p><strong>Barangay:</strong> <?php echo $row['barangay']; ?></p>
-              <p><strong>City:</strong> <?php echo $row['city']; ?></p>
+              <?php if ($row['pickup_type'] === 'authorized_person'): ?>
+                <!-- Authorized Person Name Row -->
+                <div class="row mb-2">
+                  <div class="col-md-4"><strong>Authorized Person Name:</strong></div>
+                  <div class="col-md-8"><?php echo $row['authorized_person_name']; ?></div>
+                </div>
+
+                <!-- Authorized Person Relationship Row -->
+                <div class="row mb-2">
+                  <div class="col-md-4"><strong>Relationship:</strong></div>
+                  <div class="col-md-8"><?php echo $row['authorized_person_relationship']; ?></div>
+                </div>
+              <?php endif; ?>
+              <div class="row mb-2">
+                <div class="col-md-4"><strong>Approved By:</strong></div>
+                <div class="col-md-8">
+                  <?php echo !empty($row['assigned_staff']) ? $row['assigned_staff'] : "No assigned staff"; ?>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -159,21 +303,16 @@ if (!isset($_GET['r'])) {
                 <div class="row g-3">
                   <?php foreach ($images as $image): ?>
                     <div class="col-4">
-                      <a href="<?php echo $image; ?>" target="_blank" class="d-block">
-                        <img src="<?php echo $image; ?>" class="img-thumbnail attachment-img" alt="Attachment">
+                      <a href="<?php echo $image; ?>" target="_blank" class="attachment">
+                        <img src="<?php echo $image; ?>" class="attachment-img" alt="Attachment">
+                        <p class="attachment-text"><?php echo basename($image); ?></p>
                       </a>
                     </div>
                   <?php endforeach; ?>
                 </div>
               </div>
-
-
               <style>
-                .attachment-img {
-                  width: 100%;
-                  height: 180px;
-                  object-fit: cover;
-                }
+
               </style>
             </div>
           <?php endif; ?>
@@ -181,8 +320,72 @@ if (!isset($_GET['r'])) {
       </div>
     </section>
   </main>
-  <script>
 
+  <script>
+    $('#authImages').on('change', function () {
+      let files = this.files;
+      let previewContainer = $('.preview');
+      previewContainer.empty(); // Clear previous images
+
+      if (files.length < 2) {
+        alert("Please select at least 2 images.");
+        $(this).val(''); // Reset input
+        return;
+      }
+
+      $.each(files, function (index, file) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          let img = $('<img>').attr('src', e.target.result).addClass('img-thumbnail');
+          previewContainer.append(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    $(document).on("click", "#cancelButton", function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: 'Do you want to cancel the request?',
+        text: 'This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, cancel it!',
+        cancelButtonText: 'No, keep it'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: 'api/cancel_request.php',
+            type: 'POST',
+            data: { request_id: '<?php echo $_GET['r']; ?>' },  // Pass the request_id dynamically
+            success: function (response) {
+              let json = JSON.parse(response);
+              if (json.status === "success") {
+                Swal.fire({
+                  title: 'Cancelled!',
+                  text: json.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then(() => {
+                  location.reload(); // Optionally reload the page to reflect the changes
+                });
+              } else {
+                Swal.fire({
+                  title: 'Error!',
+                  text: json.message,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              }
+            },
+            error: function () {
+              Swal.fire('Error', 'Request failed. Please try again.', 'error');
+            }
+          });
+        }
+      });
+    });
   </script>
 </body>
 

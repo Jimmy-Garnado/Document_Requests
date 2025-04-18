@@ -1,6 +1,6 @@
 <?php
   include("connection.php");
-  include("emailer.php");
+  include_once "../module/emailer.php";
 
   session_start();
 

@@ -192,12 +192,12 @@ $row = $select->fetch_assoc();
                   </thead>
                   <tbody>
                     <?php
-                    $transactions = $conn->query("SELECT * FROM requests WHERE client_id='" . $row['stuid'] . "' ORDER BY date_created DESC");
+                    $transactions = $conn->query("SELECT * FROM v2_requests WHERE student_id='" . $row['stuid'] . "' ORDER BY date_created DESC");
                     while ($transaction = $transactions->fetch_assoc()) {
                       echo "<tr>
                       <td>" . date("M j, Y", strtotime($transaction['date_created'])) . "</td>
                         <td><a href='view.php?r={$transaction['request_id']}'>{$transaction['request_id']}</a></td>
-                        <td>" . number_format($transaction['price'], 2, '.', ',') . "</td>
+                        <td>" . number_format($transaction['total_price'], 2, '.', ',') . "</td>
                         <td>{$transaction['status']}</td>
                       </tr>";
                     }

@@ -5,10 +5,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Create a new PHPMailer instance
-function sendPaymentNotification($request_id){
+function sendPaymentNotification($request_id)
+{
   include_once("connection.php");
 
-  $query = "SELECT client_name, client_email, price FROM requests WHERE request_id = ?";
+  $query = "SELECT name, email, total_price FROM v2_requests WHERE request_id = ?";
   $stmt = $conn->prepare($query);
   $stmt->bind_param("i", $request_id);
   $stmt->execute();
@@ -20,25 +21,25 @@ function sendPaymentNotification($request_id){
 
   $row = $result->fetch_assoc();
 
-  $client_name = $row['client_name'];
-  $client_email = $row['client_email'];
-  $price = $row['price'];
+  $client_name = $row['name'];
+  $client_email = $row['email'];
+  $price = $row['total_price'];
 
   $mail = new PHPMailer(true);
 
   try {
-    // Set up PHPMailer
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = 'smtp.hostinger.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'bokwebmaster2000@gmail.com'; // Your Gmail address
-    $mail->Password = 'qxepkpgupfksvpfx'; // Your Gmail App Password
+    $mail->Username = 'support@bpceregistrar.online';
+    $mail->Password = 'fA5X07~:JT$';
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
+    $mail->isHTML(true);
+    $mail->setFrom('support@bpceregistrar.online', 'BPC E-Registrar');
 
     // Set the sender and recipient
-    $mail->setFrom('bokwebmaster2000@gmail.com', 'BPC Registrar');
-  
+
     $mail->addAddress($client_email);
 
 
@@ -58,7 +59,7 @@ function sendPaymentNotification($request_id){
     ';
 
     // Send the email
-    $mail -> send();
+    $mail->send();
 
     echo json_encode(['status' => 'success', 'message' => 'Email sent successfully']);
   } catch (Exception $e) {

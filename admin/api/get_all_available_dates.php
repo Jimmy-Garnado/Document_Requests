@@ -13,7 +13,7 @@ $period = new DatePeriod($today, $interval, $endDate);
 foreach ($period as $date) {
   $formattedDate = $date->format('Y-m-d');
 
-  $sql = "SELECT COUNT(*) as slots_used FROM requests WHERE release_date = ?";
+  $sql = "SELECT COUNT(*) as slots_used FROM v2_requests WHERE release_date = ?";
 
   if ($stmt = $conn->prepare($sql)) {
     $stmt->bind_param('s', $formattedDate); // Bind the date parameter

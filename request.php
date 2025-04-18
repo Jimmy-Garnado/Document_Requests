@@ -112,8 +112,8 @@
         <h5>REQUEST DOCUMENT</h5>
         <button id="submitButton" class="ms-auto btn btn-success" type="submit">Submit Request</button>
       </div>
-      <section class="p-4 d-flex flex-row gap-4">
-        <div class="col-6">
+      <section class="p-4 d-flex flex-column flex-md-row gap-4">
+        <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label fw-semibold">PROGRAM</label>
             <select class="form-select" name="program">
@@ -180,7 +180,7 @@
           </div>
 
         </div>
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <p class="fw-semibold">PICKUP TYPE</p>
           <div class="form-check mt-2">
             <input class="form-check-input" type="radio" name="pickupType" id="myself" value="myself" checked>

@@ -3,7 +3,7 @@
 
   $requestid = $_POST['requestid'];
 
-  if($conn -> query("UPDATE requests SET payment_status=true WHERE request_id='$requestid'")){
+  if($conn -> query("UPDATE v2_requests SET payment_status='Paid' WHERE request_id='$requestid'")){
     echo "ok";
   }
 

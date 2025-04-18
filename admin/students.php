@@ -313,10 +313,8 @@
     })
 
     $(document).ready(function(){
-      
-
       $('#students').DataTable({
-          ajax: 'api/get_all_student.php',
+          ajax: 'api/get-all.php?table=users',
           columns: [
             { data: 'stuid', title: 'ID' },
             { data: 'stuname', title: 'Name' },

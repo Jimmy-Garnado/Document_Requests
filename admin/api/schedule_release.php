@@ -1,6 +1,6 @@
 <?php
 include("connection.php");
-include("send-email-release.php");
+include("../../module/emailer.php");
 
 // Sanitize inputs to prevent SQL injection
 $request_id = $conn->real_escape_string($_POST['request_id']);
@@ -17,7 +17,7 @@ $release_date = $datetime->format('Y-m-d');
 
 
 // Prepare the SQL query to update the release_date
-$sql = "UPDATE requests SET release_date = ? WHERE request_id = ?";
+$sql = "UPDATE v2_requests SET release_date = ? WHERE request_id = ?";
 
 // Prepare the statement
 if ($stmt = $conn->prepare($sql)) {
@@ -25,12 +25,15 @@ if ($stmt = $conn->prepare($sql)) {
 
   if ($stmt->execute()) {
 
-    if($conn -> query("UPDATE requests SET status='For Release' WHERE request_id='$request_id'")){
-      $select = $conn -> query("SELECT client_email, document_type FROM requests WHERE request_id='$request_id'");
+    if($conn -> query("UPDATE v2_requests SET status='For Release' WHERE request_id='$request_id'")){
+      $select = $conn -> query("SELECT email, document_to_request FROM v2_requests WHERE request_id='$request_id'");
 
       $row = $select -> fetch_assoc();
   
-      if(sendEmailRelease($row['client_email'], $row['document_type'], $release_date)){
+      $documentToRequest = json_decode($row['document_to_request'], true); // true to convert into an array
+      $documentList = implode(", ", $documentToRequest);
+
+      if(sendEmailRelease($row['email'], $documentList, $release_date)){
         echo json_encode(['status' => 'success', 'message' => 'Date Scheduled', 'description' => 'Request ready for release.']);
       }
     }else {
