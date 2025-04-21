@@ -17,7 +17,7 @@
     <?php include("../reusables/admin-sidebar.php"); ?>
     
     <div class="col-12 col-lg-10 p-2 p-lg-4">
-      <h4 class="mb-4 fw-bold">ARCHIVES</h4>
+      <h4 class="mb-4 fw-bold">Archives</h4>
       <div class="table-responsive">
         <table id="example" class="table table-responsive">
           <thead>

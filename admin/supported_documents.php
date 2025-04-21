@@ -16,7 +16,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold">ADD NEW DOCUMENT TYPE</h5>
+          <h5 class="modal-title fw-bold">Add New Document Type</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="createdocumentform">
@@ -76,7 +76,7 @@
     
     <div class="col-12 col-lg-10 p-4">
       <div class="d-flex flex-row justify-content-between align-items-center">
-      <h4 class="mb-4 fw-bold">SUPPORTED DOCUMENTS TYPE</h4>
+      <h4 class="mb-4 fw-bold">Supported Document Type</h4>
       <button data-bs-toggle="modal" data-bs-target="#createdocumentmodal" class="btn btn-primary">Add Document Type</button>
       </div>
       <table id="example" class="table table-responsive">
