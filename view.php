@@ -113,7 +113,7 @@ if (!isset($_GET['r'])) {
           gap: 1rem;
         }
       </style>
-      <?php if ($row['status'] !== 'Cancelled'): ?>
+      <?php if ($row['status'] !== "Cancelled" && $row['status'] !== "Rejected"): ?>
         <div class="py-0 pt-3">
           <button id="cancelButton" class="btn btn-danger">
             <i class="fas fa-times-circle"></i> Cancel
@@ -122,8 +122,8 @@ if (!isset($_GET['r'])) {
             <i class="fas fa-upload"></i> Upload Attachments
           </button>
         </div>
-
       <?php endif; ?>
+
       <div class="grid-2-col">
         <div>
           <div class="card mb-3">
