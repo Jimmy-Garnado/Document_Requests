@@ -40,12 +40,25 @@ if (!is_dir($uploadBasePath)) {
   mkdir($uploadBasePath, 0777, true);
 }
 
+
+$receiptPath = '';
+if (!empty($_FILES['receipt']['name'])) {
+    if ($_FILES['receipt']['error'] === UPLOAD_ERR_OK) {
+        $fileName = "PAYMENT_RECEIPT.jpg"; // Use uniqid for a unique name
+        $destinationPath = $uploadBasePath . "/" . $fileName;
+
+        if (compressAndSaveImage($_FILES['receipt']['tmp_name'], $destinationPath)) {
+            $receiptPath = $destinationPath;
+        }
+    }
+}
+
 // --- Authorized Person Attachments ---
 $authAttachments = [];
 if (!empty($_FILES['authorized_person_attachments']['name'][0])) {
   foreach ($_FILES['authorized_person_attachments']['tmp_name'] as $index => $tmpName) {
     if ($_FILES['authorized_person_attachments']['error'][$index] === UPLOAD_ERR_OK) {
-      $fileName = "auth_person_attachment_" . ($index + 1) . ".jpg";
+      $fileName = "AUTHORIZED_PERSON_" . ($index + 1) . ".jpg";
       $destinationPath = $uploadBasePath . "/" . $fileName;
 
       if (compressAndSaveImage($tmpName, $destinationPath)) {
@@ -61,7 +74,7 @@ $attachmentsArr = [];
 if (!empty($_FILES['attachments']['name'][0])) {
     foreach ($_FILES['attachments']['tmp_name'] as $index => $tmpName) {
         if ($_FILES['attachments']['error'][$index] === UPLOAD_ERR_OK) {
-            $fileName = "attachment_" . ($index + 1) . ".jpg";
+            $fileName = "ATTACHMENT_" . ($index + 1) . ".jpg";
             $destinationPath = $uploadBasePath . "/" . $fileName;
 
             if (compressAndSaveImage($tmpName, $destinationPath)) {
@@ -132,13 +145,14 @@ $stmt = $conn->prepare("INSERT INTO v2_requests (
     authorized_person_attachments, 
     attachments, 
     total_price, 
-    release_date
-) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    release_date,
+    payment_status
+) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 $documents = json_encode($document_to_request);
-
+$payment_status = "Paid";
 $stmt->bind_param(
-  "sssssssssssssssssssds",
+  "sssssssssssssssssssdss",
   $request_id,
   $email,
   $name,
@@ -159,7 +173,8 @@ $stmt->bind_param(
   $authorized_person_attachments,
   $attachments,
   $total_price,
-  $release_date
+  $release_date,
+  $payment_status
 );
 
 if ($stmt->execute()) {

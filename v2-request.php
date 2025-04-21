@@ -45,41 +45,64 @@ $stmt->close();
 
     .preview img {
       width: 100%;
-      /* Make images responsive */
       height: auto;
       max-height: 200px;
       object-fit: cover;
     }
   </style>
 
-  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">CONFIRM DETAILS</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="d-flex flex-column" id="confirmation-body">
 
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" id="submit-request-btn">Submit Request</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <main class="container-fluid d-flex flex-lg-row flex-column p-0">
     <?php include("reusables/client-sidebar.php"); ?>
 
     <form id="requestForm" class="w-100" enctype="multipart/form-data">
+      <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Payment</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-4 mt-4 d-flex flex-column align-items-center">
+                <p class="h5">Please Pay</p>
+                <p class="h2 fw-bold" id="total_price_display">Please Pay</p>
+              </div>
+              <p class="mb-4">Please send your payment via the following options:</p>
+              <div class="mb-4 d-flex flex-column">
+                <p class="h5 fw-bold">Scan QR Code</p>
+                <img src="images/sample-qr.png" alt="GCash QR Code" class="align-self-center img-fluid">
+              </div>
+
+              <div class="mb-4">
+                <p class="h5 fw-bold">GCash Number</p>
+                <p style="
+                font-size: 18px;
+                background-color: var(--bs-blue);
+                color: white;
+                padding: 0.5rem;
+                ">09-637-205-895 - BPC Cashier</p>
+              </div>
+
+              <div>
+                <p class="h5 fw-bold">Upload Receipt</p>
+                <input type="file" name="receipt" class="form-control" id="receipt" required accept="image/*">
+                <small class="form-text text-muted">Kindly upload a screenshot or photo of your payment receipt.</small>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" id="submit-request-btn">Submit Request</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <section class="row m-0">
         <div class="d-flex flex-row justify-space-between align-items-center mb-2 mt-2">
-          <button id="submitButton" class="ms-auto btn btn-success" type="submit">
-            Submit Request
-            <i class="fa-solid fa-arrow-right ms-1"></i>
+          <button id="submitButton" class="ms-auto btn btn-success" type="button">
+            <i class="fa-solid fa-check ms-1"></i>
+            Proceed Payment
           </button>
         </div>
 
@@ -108,8 +131,7 @@ $stmt->close();
                 <div class="col-6 col-lg-3">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Birthday</label>
-                    <input type="date" class="form-control" value="<?php echo $userData['birthday']; ?>"
-                      disabled />
+                    <input type="date" class="form-control" value="<?php echo $userData['birthday']; ?>" disabled />
                     <input type="hidden" name="birthday" value="<?php echo $userData['birthday']; ?>">
                   </div>
                 </div>
@@ -196,7 +218,7 @@ $stmt->close();
                     <div class='form-check d-flex flex-column mb-4'>
                       <div class='row'>
                         <div class='col-1'>
-                          <input class='form-check-input' name='document_to_request[]' type='checkbox' value='" . $row['name'] . "' />
+                          <input class='form-check-input' name='document_to_request[]' type='checkbox' value='" . $row['name'] . "' data-price='" . $row['price'] . "' />
                         </div>
                         <div class='col-8'>
                           <p class='form-check-label fw-semibold'>" . $row['name'] . " </p>
@@ -241,7 +263,7 @@ $stmt->close();
                   placeholder="Please indicate your purpose" style="display: none;" />
               </div>
             </div>
-           
+
           </div>
           <div class="card mt-2 mt-lg-4">
             <div class="card-header">
@@ -289,12 +311,67 @@ $stmt->close();
   </main>
 
   <script>
+    var REQUEST_FORM_DATA = [];
+    var TOTAL_PRICE = 0;
+
+    $("#requestForm").submit(function (e) {
+      e.preventDefault();
+
+      var formData = new FormData(this)
+
+      $.ajax({
+        url: 'api/v2_request/insert.php',
+        type: 'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: () => {
+          $("#submit-request-btn").attr('disabled', true);
+          $("#submit-request-btn").html("Submitting... (PLEASE DO NOT CLOSE OR RELOAD THE PAGE");
+        },
+        success: response => {
+          try {
+            let json = JSON.parse(response);
+
+            if (json.status === true) {
+              Swal.fire({
+                title: json.message,
+                text: json.description,
+                icon: "success",
+                confirmButtonText: "View My Request"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.href = "profile.php";
+                }
+              });
+            } else {
+              Swal.fire({
+                title: json.message,
+                text: json.description,
+                icon: "error"
+              });
+            }
+          } catch (err) {
+            console.error("Invalid JSON response", err);
+            Swal.fire("Oops", "Unexpected response from server.", "error");
+          } finally {
+            $("#submitButton").attr('disabled', false);
+            $("#submitButton").html("Submit");
+          }
+        },
+        error: () => {
+          Swal.fire("Error", "Request failed. Please try again.", "error");
+          $("#submit-request-btn").attr('disabled', false);
+          $("#submit-request-btn").html("Submit");
+        }
+      });
+
+    })
+
     $(document).ready(function () {
       $('#requestPurposeSelect').on('change', function () {
         const isOthers = $(this).val() === 'others';
         $('#otherPurposeInput').toggle(isOthers);
-
-        // If "Others" is selected, make sure the input is required
         $('#otherPurposeInput').prop('required', isOthers);
       });
 
@@ -316,6 +393,21 @@ $stmt->close();
     });
 
     $(document).ready(function () {
+      $("#requestForm").on('change', function () {
+        TOTAL_PRICE = 0;
+
+        $('input[name="document_to_request[]"]:checked').each(function () {
+          let price = $(this).data('price');
+
+          if (!isNaN(parseFloat(price))) {
+            TOTAL_PRICE += parseFloat(price);
+          }
+        });
+
+        // Now 'total' holds the sum of the data-price of all checked checkboxes
+        $("#total_price_display").text("PHP " + TOTAL_PRICE.toFixed(2))
+      });
+
       // Show/Hide file input based on radio selection
       $('input[name="pickup_type"]').change(function () {
         if ($('#authorizedPerson').is(':checked')) {
@@ -352,68 +444,17 @@ $stmt->close();
           reader.readAsDataURL(file);
         });
       });
-
     });
 
-    $(document).on("submit", "#requestForm", function (e) {
-      e.preventDefault();
-
+    $(document).on("click", "#submitButton", function () {
       const checkedDocs = $("input[name='document_to_request[]']:checked");
-      console.log("Checked docs count:", checkedDocs.length);
 
       if (checkedDocs.length === 0) {
         alert("Please select at least one document type.");
         return;
       }
 
-      var formData = new FormData(this);
-
-      $.ajax({
-        url: 'api/v2_request/insert.php',
-        type: 'post',
-        data: formData,
-        contentType: false,
-        processData: false,
-        beforeSend: () => {
-          $("#submitButton").attr('disabled', true);
-          $("#submitButton").html("Submitting...");
-        },
-        success: response => {
-          try {
-            let json = JSON.parse(response);
-
-            if (json.status === true) {
-              Swal.fire({
-                title: json.message,
-                text: json.description,
-                icon: "success",
-                confirmButtonText: "View My Request"
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  location.href = "profile.php";
-                }
-              });
-            } else {
-              Swal.fire({
-                title: json.message,
-                text: json.description,
-                icon: "error"
-              });
-            }
-          } catch (err) {
-            console.error("Invalid JSON response", err);
-            Swal.fire("Oops", "Unexpected response from server.", "error");
-          } finally {
-            $("#submitButton").attr('disabled', false);
-            $("#submitButton").html("Submit");
-          }
-        },
-        error: () => {
-          Swal.fire("Error", "Request failed. Please try again.", "error");
-          $("#submitButton").attr('disabled', false);
-          $("#submitButton").html("Submit");
-        }
-      });
+      $("#paymentModal").modal("toggle")
     });
   </script>
 </body>
