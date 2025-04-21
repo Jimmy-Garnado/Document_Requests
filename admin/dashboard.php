@@ -22,7 +22,7 @@
     <?php include("../reusables/admin-sidebar.php"); ?>
     
     <div class="col-10 p-4">
-      <h2 class="mb-4">Welcome to BPC E-Registrar 2024</h2>
+      <h2 class="mb-4">Welcome to BPC E-Registrar 2025</h2>
       <div class="row">
         <div class="col-6 p-2">
           <div class="card">
@@ -83,6 +83,7 @@
 
   <script>
     $(document).ready(function(){
+      
       // Initialize the Pie Chart
       const requestchart = new Chart(document.getElementById('requestchart').getContext('2d'), {
         type: 'pie',

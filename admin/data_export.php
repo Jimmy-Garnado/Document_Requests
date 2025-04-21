@@ -20,7 +20,7 @@
     <?php include("../reusables/admin-sidebar.php"); ?>
     
     <div class="col-10 p-4">
-      <h4 class="fw-bold mb-4">DATA EXPORT</h4>
+      <h4 class="fw-bold mb-4">Data Export</h4>
       <div class="row">
 
       </div>

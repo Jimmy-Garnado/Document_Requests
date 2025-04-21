@@ -59,7 +59,7 @@ include_once("api/connection.php");
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold">ADD STAFF (BATCH)</h5>
+          <h5 class="modal-title fw-bold">Add Staff (Batch)</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="addbatchstaffform">
@@ -75,7 +75,7 @@ include_once("api/connection.php");
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">RUN BATCH</button>
+            <button type="submit" class="btn btn-success">Run Batch</button>
           </div>
         </form>
       </div>
@@ -107,7 +107,7 @@ include_once("api/connection.php");
     <div class="col-10 p-4">
       <div class="row">
         <div class="col-9">
-          <h4 class="mb-4 fw-bold">STAFF MANAGEMENT</h4>
+          <h4 class="mb-4 fw-bold">Staff Management</h4>
 
           <table id="staffs" class="table table-responsive">
             <thead>
@@ -127,18 +127,18 @@ include_once("api/connection.php");
             <div class="row">
               <div class="col-12">
                 <div class="d-flex flex-column gap-2">
-                  <h6 class="mb-2 fw-bold">MANAGE</h6>
+                  <h6 class="mb-2 fw-bold">Management</h6>
                   <button type="button" data-bs-toggle="modal" data-bs-target="#createstaffmodal"
-                    class="btn btn-primary">Single Entry</button>
+                    class="btn btn-warning">Single Entry</button>
                   <button type="button" data-bs-toggle="modal" data-bs-target="#createbatchstaffmodal"
-                    class="btn btn-primary">Batch</button>
+                    class="btn btn-warning">Batch</button>
                 </div>
               </div>
             </div>
             <div class="row mt-4">
               <div class="col-12">
                 <div class="d-flex flex-column gap-2">
-                  <h6 class="mb-2 fw-bold">DISTRIBUTION OF ROLES</h6>
+                  <h6 class="mb-2 fw-bold">Distribution of Roles</h6>
                   <canvas id="staff_role_distribution"></canvas>
                 </div>
               </div>
