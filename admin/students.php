@@ -22,7 +22,7 @@ if ($_SESSION['staffrole'] != "Admin") {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">ADD STUDENT</h5>
+          <h5 class="modal-title">Add Students</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="singlestudentform">
@@ -62,7 +62,7 @@ if ($_SESSION['staffrole'] != "Admin") {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">SAVE CHANGES</button>
+            <button type="submit" class="btn btn-success">Save Changes</button>
           </div>
         </form>
       </div>
@@ -73,7 +73,7 @@ if ($_SESSION['staffrole'] != "Admin") {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold">IMPORT STUDENT BATCH</h5>
+          <h5 class="modal-title fw-bold">Import Student Batch</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="batchstudentform">
@@ -89,7 +89,7 @@ if ($_SESSION['staffrole'] != "Admin") {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">RUN IMPORT</button>
+            <button type="submit" class="btn btn-success">Run Import</button>
           </div>
         </form>
       </div>
@@ -102,7 +102,7 @@ if ($_SESSION['staffrole'] != "Admin") {
     <div class="col-10 p-4">
       <div class="row">
         <div class="col-9">
-          <h4 class="fw-bold mb-4">STUDENT MANAGEMENT</h4>
+          <h4 class="fw-bold mb-4">Student Management</h4>
           <table id="students" class="table table-responsive">
             <thead>
               <tr>
@@ -120,11 +120,11 @@ if ($_SESSION['staffrole'] != "Admin") {
           <div class="card-body">
             <div class="row">
               <div class="col-12 d-flex flex-column gap-2">
-                <h6 class="mb-2 fw-bold">MANAGE</h6>
+                <h6 class="mb-2 fw-bold">Management</h6>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#createstudentmodal"
-                  class="btn btn-primary">Single</button>
+                  class="btn btn-warning">Single</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#createbatchstudentmodal"
-                  class="btn btn-primary">Import</button>
+                  class="btn btn-warning">Import</button>
               </div>
             </div>
           </div>
