@@ -203,7 +203,7 @@ if (!isset($_GET['r'])) {
               </div>
               <div class="row mb-2">
                 <div class="col-md-4"><strong>Date Requested:</strong></div>
-                <div class="col-md-8"><?php echo date('M d, Y', strtotime($row['date_created'])); ?></div>
+                <div class="col-md-8"><?php echo date('F j, Y g:ia', strtotime($row['date_created'])); ?></div>
               </div>
             </div>
           </div>
