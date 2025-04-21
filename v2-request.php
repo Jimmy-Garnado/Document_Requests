@@ -175,7 +175,7 @@ $stmt->close();
                     <input type="text" value="<?php echo $userData['stuid']; ?>" class="form-control" disabled />
                   </div>
                 </div>
-                <div class="col-6 col-lg-5">
+                <div class="col-6 col-lg-3">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Course</label>
                     <select class="form-select" name="student_course" required>
@@ -187,7 +187,32 @@ $stmt->close();
                     </select>
                   </div>
                 </div>
-                <div class="col-6 col-lg-5">
+                <div class="col-6 col-lg-3">
+                  <div class="form-group">
+                    <label class="form-label fw-semibold">Year</label>
+                    <select class="form-select" name="student_year" required>
+                      <option value="1st">1st</option>
+                      <option value="2nd">2nd</option>
+                      <option value="3rd">3rd</option>
+                      <option value="4th">4th</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                  <div class="form-group">
+                    <label class="form-label fw-semibold">Section</label>
+                    <select class="form-select" name="student_section">
+                      <?php
+                      include("api/connection.php");
+                        $get_all_sections = $conn -> query("SELECT name FROM sections");
+                        while($row = $get_all_sections -> fetch_assoc()){
+                          echo "<option value='".$row['name']."'>".$row['name']."</option>";
+                        }
+                      ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="mt-4 col-6 col-lg-5">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Date of Graduation</label>
                     <input type="date" class="form-control" name="date_of_graduation" required />

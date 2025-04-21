@@ -152,6 +152,14 @@ if (!isset($_GET['r'])) {
                 <div class="col-md-7"><?php echo $row["student_course"]; ?></div>
               </div>
               <div class="row mb-2">
+                <div class="col-md-5"><strong>Year:</strong></div>
+                <div class="col-md-7"><?php echo $row["student_year"]; ?></div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-5"><strong>Section:</strong></div>
+                <div class="col-md-7"><?php echo $row["student_section"]; ?></div>
+              </div>
+              <div class="row mb-2">
                 <div class="col-md-5"><strong>Date of Graduation:</strong></div>
                 <div class="col-md-7"><?php echo date('F d, Y', strtotime($row['date_of_graduation'])); ?></div>
               </div>

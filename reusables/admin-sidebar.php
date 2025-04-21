@@ -240,6 +240,10 @@
         <i class='fa-regular fa-file'></i>
         <span>Archive</span>
       </a>
+      <a href='sections.php'>
+        <i class='fa-solid fa-gear'></i>
+        <span>Sections</span>
+      </a>
       <a href='supported_documents.php'>
         <i class='fa-solid fa-gear'></i>
         <span>Document Types</span>

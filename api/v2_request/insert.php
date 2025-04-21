@@ -1,5 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Manila');
+
 include_once("../connection.php");
 session_start();
 
@@ -104,6 +105,9 @@ $pickup_type = $_POST['pickup_type'];
 $authorized_person_name = $_POST['authorized_person_name'];
 $authorized_person_relationship = $_POST['authorized_person_relationship'];
 
+$student_year = $_POST['student_year'];
+$student_section = $_POST['student_section'];
+
 $total_price = 0;
 $document_to_request = $_POST['document_to_request']; // assuming it's an array
 
@@ -146,13 +150,15 @@ $stmt = $conn->prepare("INSERT INTO v2_requests (
     attachments, 
     total_price, 
     release_date,
-    payment_status
-) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    payment_status,
+    student_year,
+    student_section
+) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 $documents = json_encode($document_to_request);
 $payment_status = "Not Paid";
 $stmt->bind_param(
-  "sssssssssssssssssssdss",
+  "sssssssssssssssssssdssss",
   $request_id,
   $email,
   $name,
@@ -174,7 +180,9 @@ $stmt->bind_param(
   $attachments,
   $total_price,
   $release_date,
-  $payment_status
+  $payment_status,
+  $student_year,
+  $student_section
 );
 
 if ($stmt->execute()) {
