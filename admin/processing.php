@@ -62,7 +62,7 @@ include_once("api/connection.php");
   <main class="container-fluid d-flex flex-lg-row flex-column p-0">
     <?php include("../reusables/admin-sidebar.php"); ?>
     <div class="col-12 col-lg-10 p-2 p-lg-4">
-      <h4 class="mb-4 fw-bold">IN-PROCESSING</h4>
+      <h4 class="mb-4 fw-bold">In-Processing</h4>
       <div class="table-responsive">
         <table id="example" class="display table" style="width:100%">
           <thead>

@@ -67,12 +67,12 @@
         />
         <form id="loginForm" class="mt-4">
           <div class="mb-2">
-            <label for="stuid" class="form-label fw-semibold">USER ID</label>
+            <label for="stuid" class="form-label fw-semibold">User ID</label>
             <input type="text" class="form-control" name="user_id" />
           </div>
           <div class="mb-4">
             <label for="stupassword" class="form-label fw-semibold"
-              >PASSWORD</label
+              >Password</label
             >
             <input type="password" class="form-control" name="user_password" />
           </div>
@@ -81,14 +81,14 @@
             id="btnLOGIN"
             class="btn btn-primary btn-lg btn-success w-100 fw-bold"
           >
-            LOGIN
+            Login
           </button>
           <button
             type="button"
             class="mt-4 btn btn-link btn-sm w-100"
             id="forgot_password_button"
           >
-            FORGOT PASSWORD
+            Forgot Password?
           </button>
         </form>
       </div>
@@ -212,7 +212,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h6 class="modal-title fw-bold">FORGOT PASSWORD</h6>
+            <h6 class="modal-title fw-bold">Forgot Password</h6>
             <button
               type="button"
               class="btn-close"
@@ -224,7 +224,7 @@
             <form id="forgot_password_form">
               <p><strong>Students:</strong> Please enter your Student ID (ex. MA233211). </p>
               <p><strong>Staffs:</strong> If you are a staff member, please contact your administrator to reset your password.</p>
-              <input type="text" placeholder="MA233211" name="email_fp" class="mt-4 form-control" />
+              <input type="text" placeholder="MA23321175" name="email_fp" class="mt-4 form-control" />
               <button class="mt-4 btn btn-success" id="reset_password_button">Reset Password</button>
             </form>
           </div>

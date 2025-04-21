@@ -20,7 +20,7 @@
     <?php include("../reusables/admin-sidebar.php"); ?>
     
     <div class="col-10 p-4">
-      <h4 class="fw-bold">CONTENT MANAGEMENT</h4>
+      <h4 class="fw-bold">Content Management</h4>
       <form id="cmsform" class="mt-4" enctype="multipart/form-data">
         <h5 class="fw-bold mb-2">System Images</h5>
         <div class="row mb-4">
@@ -60,6 +60,7 @@
       </form>
     </div>
   </main>
+
   <script>
     $("#backtodefault").on("click", function(){
       $("#system_color").val("#073000")

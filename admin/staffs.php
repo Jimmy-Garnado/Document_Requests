@@ -113,7 +113,6 @@ include_once("api/connection.php");
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Position</th>
                 <th>Role</th>
                 <th>Username</th>
                 <th>Password</th>
