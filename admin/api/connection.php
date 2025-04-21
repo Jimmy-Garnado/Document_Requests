@@ -14,6 +14,7 @@
   $database = "u994347109_bpc_main";
 
   $conn = new mysqli($servername, $username, $password, $database);
+  $conn->query("SET time_zone = '+08:00'");
 
   $CONTENT = $conn -> query("SELECT * FROM content_management WHERE id=1");
   $CONTENT = $CONTENT -> fetch_assoc();

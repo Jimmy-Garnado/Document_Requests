@@ -14,6 +14,7 @@
   $database = "u994347109_bpc_main";
 
   $conn = new mysqli($servername, $username, $password, $database);
+  $conn->query("SET time_zone = '+08:00'");
 
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
