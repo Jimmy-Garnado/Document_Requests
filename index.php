@@ -1,3 +1,12 @@
+<?php
+  include("api/connection.php");
+
+  $system_settings = $conn -> query("SELECT * FROM content_management");
+  $system_settings = $system_settings -> fetch_assoc();
+
+  $conn -> close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +34,7 @@
         right: 0;
         bottom: 0;
 
-        background-image: url("images/bpc-background.jpg");
+        background-image: url("<?php echo $system_settings["background_url"]; ?>");
         background-size: cover;
         background-repeat: no-repeat;
         filter: brightness(30%);
@@ -52,7 +61,7 @@
         <img
           width="110px"
           height="110px"
-          src="images/bpc-logo.png"
+          src="<?php echo $system_settings["logo_url"]; ?>"
           alt="BPC LOGO"
           class="align-self-center mb-2"
         />
@@ -83,7 +92,7 @@
           </button>
         </form>
       </div>
-      <h6 class="mt-4 text-white">BPC E-Registrar 2025</h6>
+      <h6 class="mt-4 text-white"><?php echo $system_settings["system_name"]; ?></h6>
     </main>
 
     <div

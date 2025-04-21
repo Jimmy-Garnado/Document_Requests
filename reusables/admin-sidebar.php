@@ -295,7 +295,7 @@
           type: "get",
           url: "api/logout.php",
           success: response => {
-            location.href = "../index.html"
+            location.href = "../index.php"
           }
         })
       }
