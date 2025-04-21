@@ -150,7 +150,7 @@ $stmt = $conn->prepare("INSERT INTO v2_requests (
 ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 $documents = json_encode($document_to_request);
-$payment_status = "Paid";
+$payment_status = "Not Paid";
 $stmt->bind_param(
   "sssssssssssssssssssdss",
   $request_id,
