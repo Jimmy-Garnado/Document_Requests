@@ -264,6 +264,10 @@ if ($_SESSION['staffrole'] != "Admin") {
               text: response,
               icon: 'error',
               confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
             });
           }
         },
