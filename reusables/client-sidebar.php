@@ -80,13 +80,13 @@
     <span>Log Out</span>
   </a>
 
-  <h6>BPC E-Registrar 2024</h6>
+  <h6>BPC E-Registrar 2025</h6>
 </div>
 
 <nav class="navbar d-lg-none" id="mobile-header">
   <div class="container-fluid p-2">
     <img src="images/bpc-logo.png" width="48px" height="48px">
-    <a class="navbar-brand" href="request.php">BPC E-Registrar 2024</a>
+    <a class="navbar-brand" href="request.php">BPC E-Registrar 2025</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

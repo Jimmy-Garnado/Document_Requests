@@ -18,7 +18,7 @@ include_once("api/connection.php");
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Add Staff (Single)</h5>
+          <h5 class="modal-title">Add Member (Single)</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="addsinglestaffform">
@@ -47,8 +47,8 @@ include_once("api/connection.php");
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Add Staff</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Add Member</button>
           </div>
         </form>
       </div>
@@ -162,9 +162,9 @@ include_once("api/connection.php");
         success: function (response) {
           if (response.trim() === "ok") {
             Swal.fire({
-              title: 'Staff member updated successfully!',
-              text: 'The staff member information has been updated.',
-              icon: 'success',
+              title: 'Member Updated Successfully!',
+              text: 'The Member Information has been Updated.',
+              icon: 'Success',
               confirmButtonText: 'Reload Page'
             }).then((result) => {
               if (result.isConfirmed) {
@@ -210,7 +210,7 @@ include_once("api/connection.php");
           if (response.trim() === "ok") {
             Swal.fire({
               title: 'Members Added Successfully',
-              text: 'New staff members has been added.',
+              text: 'New Members has been Added.',
               icon: 'success',
               confirmButtonText: 'Reload Page'
             }).then((result) => {
@@ -252,8 +252,8 @@ include_once("api/connection.php");
         success: function (response) {
           if (response.trim() === "ok") {
             Swal.fire({
-              title: 'Staff member added successfully!',
-              text: 'The new staff member has been added.',
+              title: 'Member Added Successfully!',
+              text: 'The New Member has been Added.',
               icon: 'success',
               confirmButtonText: 'Reload Page'
             }).then((result) => {
