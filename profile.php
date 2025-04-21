@@ -142,6 +142,17 @@ $row = $select->fetch_assoc();
               </div>
               <div class="card-body">
                 <div class="form-group mb-2">
+                  <label class="form-label mb-0 fw-semibold">Sex</label>
+                  <select name="sex" class="mt-2 form-select" required>
+                    <option value="Male" <?php echo ($row['sex'] === 'Male') ? 'selected' : ''; ?>>Male</option>
+                    <option value="Female" <?php echo ($row['sex'] === 'Female') ? 'selected' : ''; ?>>Female</option>
+                  </select>
+                </div>
+                <div class="form-group mb-2">
+                  <label class="form-label mb-0 fw-semibold">Birthday</label>
+                  <input type="date" name="birthday" class="mt-2 form-control"  value="<?php echo $row['birthday']; ?>" required />
+                </div>
+                <div class="form-group mb-2">
                   <label class="form-label mb-0 fw-semibold">Contact Number</label>
                   <input type="text" name="contact_number" class="mt-2 form-control" value="<?php echo ($row['contact_number'] === 'none') ? '' : $row['contact_number']; ?>" required />
                 </div>
@@ -300,7 +311,7 @@ $row = $select->fetch_assoc();
     });
 
     // Enable the button when any input changes
-    $('#profileForm input').on('input change', function() {
+    $('#profileForm input, #profileForm select').on('input change', function() {
       $('#saveChangesButton').prop('disabled', false);
     });
 

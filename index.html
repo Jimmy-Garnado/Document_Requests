@@ -137,14 +137,27 @@
               If you have any questions regarding this Privacy Notice, please
               contact us at [email address].
             </p>
+
+            <div class="form-check mt-4">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="privacyCheckbox"
+              />
+              <label class="form-check-label" for="privacyCheckbox">
+                I have read and accept the Agreement and Privacy Policy of Bulacan Polytechnic College
+              </label>
+            </div>
           </div>
           <div class="modal-footer">
             <button
               type="button"
               class="btn btn-success"
               data-bs-dismiss="modal"
+              id="agreeButton"
+              disabled
             >
-              I Agree To Privacy Policy
+              I Agreed To Privacy Policy
             </button>
           </div>
         </div>
@@ -200,8 +213,10 @@
           </div>
           <div class="modal-body p-4">
             <form id="forgot_password_form">
-              <input type="email" name="email_fp" class="form-control" />
-              <button class="mt-4 btn btn-success">Reset Password</button>
+              <p><strong>Students:</strong> Please enter your Student ID (ex. MA233211). </p>
+              <p><strong>Staffs:</strong> If you are a staff member, please contact your administrator to reset your password.</p>
+              <input type="text" placeholder="MA233211" name="email_fp" class="mt-4 form-control" />
+              <button class="mt-4 btn btn-success" id="reset_password_button">Reset Password</button>
             </form>
           </div>
         </div>
@@ -209,6 +224,12 @@
     </div>
 
     <script>
+      $(document).ready(function () {
+        $('#privacyCheckbox').on('change', function () {
+          $('#agreeButton').prop('disabled', !this.checked);
+        });
+      });
+      
       $("#verification_form").on("submit", function (event) {
         event.preventDefault();
 
@@ -255,6 +276,10 @@
           processData: false,
           contentType: false,
           data: formdata,
+          beforeSend: () => {
+            $("#reset_password_button").attr("disabled", true)
+            $("#reset_password_button").text("Resetting... (please don't close tab or page)")
+          },
           success: (response) => {
             if (response === "ok") {
               Swal.fire({
@@ -270,21 +295,16 @@
               });
             }
           },
+          complete: () => {
+            $("#reset_password_button").attr("disabled", false);
+            $("#reset_password_button").text("Reset Password");
+            $("#forgotPasswordModal").modal("toggle");
+          },
         });
       });
 
       $("#forgot_password_button").on("click", function () {
-        var role_type = $("select[name='role_type']").val();
-
-        if (role_type === "Student") {
-          $("#forgotPasswordModal").modal("toggle");
-        } else {
-          Swal.fire({
-            title: "Action Required",
-            text: "Please contact your administrator to reset your password.",
-            icon: "warning",
-          });
-        }
+        $("#forgotPasswordModal").modal("toggle");
       });
 
       $("#loginForm").on("submit", function (event) {

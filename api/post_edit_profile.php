@@ -8,8 +8,12 @@
   $barangay = $_POST['barangay'];
   $city = $_POST['city'];
   $province = $_POST['province'];
+  $sex = $_POST['sex'];
+  $birthday = $_POST['birthday'];
 
   $update = $conn -> query("UPDATE users SET 
+    sex='$sex',
+    birthday='$birthday',
     contact_number='$contact_number',
     email='$email',
     street='$street',

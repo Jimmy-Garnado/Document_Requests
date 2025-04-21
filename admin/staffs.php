@@ -369,7 +369,13 @@ include_once("api/connection.php");
           { data: 'position', title: 'Position' },
           { data: 'role', title: 'Role' },
           { data: 'username', title: 'Username' },
-          { data: 'password', title: 'Password' },
+          {
+            data: 'password',
+            title: 'Password',
+            render: function (data, type, row) {
+              return '*'.repeat(data.length);
+            }
+          },
           {
             data: 'id',
             title: 'Action',

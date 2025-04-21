@@ -1,20 +1,22 @@
 <?php
-  session_start();
-  include_once("api/connection.php");
+session_start();
+include_once("api/connection.php");
 
-  if($_SESSION['staffrole'] != "Admin"){
-    header("location: dashboard.php");
-  }
+if ($_SESSION['staffrole'] != "Admin") {
+  header("location: dashboard.php");
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Students - <?php echo $CONTENT['system_name']; ?></title>
   <?php include("static-loader.php"); ?>
 </head>
+
 <body>
   <div class="modal fade" id="createstudentmodal" tabindex="-1">
     <div class="modal-dialog">
@@ -40,7 +42,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">ADD STUDENT</button>
+            <button type="submit" class="btn btn-success" id="addStudentButton">Add Student</button>
           </div>
         </form>
       </div>
@@ -77,7 +79,8 @@
         <form id="batchstudentform">
           <div class="modal-body">
             <div class="mb-3">
-              <a class="btn btn-primary btn-sm" href="spreadsheets/template_for_batch_student.xlsx" download>Download Template</a>
+              <a class="btn btn-primary btn-sm" href="spreadsheets/template_for_batch_student.xlsx" download>Download
+                Template</a>
             </div>
             <div class="mb-3">
               <label for="batchstaff" class="form-label fw-bold">Upload file</label>
@@ -95,7 +98,7 @@
 
   <main class="container-fluid d-flex flex-row p-0">
     <?php include("../reusables/admin-sidebar.php"); ?>
-    
+
     <div class="col-10 p-4">
       <div class="row">
         <div class="col-9">
@@ -118,8 +121,10 @@
             <div class="row">
               <div class="col-12 d-flex flex-column gap-2">
                 <h6 class="mb-2 fw-bold">MANAGE</h6>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#createstudentmodal" class="btn btn-primary">Single</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#createbatchstudentmodal" class="btn btn-primary">Import</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#createstudentmodal"
+                  class="btn btn-primary">Single</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#createbatchstudentmodal"
+                  class="btn btn-primary">Import</button>
               </div>
             </div>
           </div>
@@ -128,12 +133,12 @@
     </div>
   </main>
   <script>
-    function editStudent(stuid){
+    function editStudent(stuid) {
       $.ajax({
         type: 'get',
         url: 'api/get_edit_student_details.php',
         data: {
-          stuid : stuid
+          stuid: stuid
         },
         success: response => {
           $("#editstudentodal").modal("toggle")
@@ -143,7 +148,7 @@
       })
     }
 
-    function deleteStudent(stuid){
+    function deleteStudent(stuid) {
 
 
       Swal.fire({
@@ -159,10 +164,10 @@
             type: 'post',
             url: 'api/post_delete_student.php',
             data: {
-              id : stuid
+              id: stuid
             },
             success: response => {
-              if(response === 'ok'){
+              if (response === 'ok') {
                 alert('Student deleted!')
                 location.reload();
               }
@@ -172,7 +177,7 @@
       });
     }
 
-    $("#edistudentform").submit(function(event){
+    $("#edistudentform").submit(function (event) {
       $("#editstudentodal").modal('toggle')
       toggleLoadingModal();
 
@@ -186,10 +191,10 @@
         data: formData,
         contentType: false,
         processData: false,
-        success: function(response) {
+        success: function (response) {
           toggleLoadingModal();
 
-          if (response.trim() === "ok") { 
+          if (response.trim() === "ok") {
             Swal.fire({
               title: 'Student Updated successfully!',
               text: 'Student information has been updated.',
@@ -213,7 +218,7 @@
             });
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           Swal.fire({
             title: 'An error occurred',
             text: 'There was an issue submitting the form. Please try again.',
@@ -224,7 +229,7 @@
       });
     })
 
-    $("#batchstudentform").submit(function(event){
+    $("#batchstudentform").submit(function (event) {
       $("#createbatchstudentmodal").modal('toggle')
       toggleLoadingModal();
       event.preventDefault();
@@ -237,10 +242,10 @@
         data: formData,
         contentType: false,
         processData: false,
-        success: function(response) {
+        success: function (response) {
           toggleLoadingModal();
 
-          if (response.trim() === "ok") { 
+          if (response.trim() === "ok") {
             Swal.fire({
               title: 'Students List Added Successfully',
               text: 'New students has been added.',
@@ -262,7 +267,7 @@
             });
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           Swal.fire({
             title: 'An error occurred',
             text: 'There was an issue submitting the form. Please try again.',
@@ -272,10 +277,8 @@
         }
       });
     })
-    
-    $(document).on('submit', "#singlestudentform", function(event){
-      $("#createstudentmodal").modal("toggle")
-      toggleLoadingModal();
+
+    $(document).on('submit', "#singlestudentform", function (event) {
       event.preventDefault();
 
       var formData = new FormData(this)
@@ -286,12 +289,25 @@
         data: formData,
         processData: false,
         contentType: false,
+        beforeSend: () => {
+          $("#addStudentButton").attr("disabled", true)
+          $("#addStudentButton").text("Adding... (Please don't reload or close tab)");
+        },
         success: response => {
-          toggleLoadingModal();
-          if (response.trim() === "ok") { 
+          var resp = JSON.parse(response)
+
+          if(resp.status === "duplicate"){
             Swal.fire({
-              title: 'Student Added Successfully!',
-              icon: 'success',
+              title: resp.message,
+              icon: "error",
+              text: resp.description,
+              confirmButtonText: 'Ok'
+            });
+          }else if (resp.status === "success") {
+            Swal.fire({
+              title: resp.message,
+              icon: resp.status,
+              text: resp.description,
               confirmButtonText: 'Refresh Table'
             }).then((result) => {
               if (result.isConfirmed) {
@@ -299,47 +315,58 @@
               }
             });
           } else {
-            toggleLoadingModal()
-            $("#createstudentmodal").modal("toggle")
             Swal.fire({
-              title: 'Error',
-              text: response,
-              icon: 'error',
-              confirmButtonText: 'OK'
+              title: resp.message,
+              icon: resp.status,
+              text: resp.description,
+              confirmButtonText: 'Ok'
             });
           }
+        },
+        complete: () => {
+          $("#addStudentButton").attr("disabled", false)
+          $("#addStudentButton").text("Add Student");
         }
       })
     })
 
-    $(document).ready(function(){
+    $(document).ready(function () {
       $('#students').DataTable({
-          ajax: 'api/get-all.php?table=users',
-          columns: [
-            { data: 'stuid', title: 'ID' },
-            { data: 'stuname', title: 'Name' },
-            { data: 'stuemail', title: 'Email' },
-            { data: 'stupassword', title: 'Password' },
-            { data: 'is_deleted', title: 'Is Deleted?', render: function(data){
-              if(data == false){
+        ajax: 'api/get-all.php?table=users',
+        columns: [
+          { data: 'stuid', title: 'ID' },
+          { data: 'stuname', title: 'Name' },
+          { data: 'stuemail', title: 'Email' },
+          {
+            data: 'stupassword',
+            title: 'Password',
+            render: function (data, type, row) {
+              return '*'.repeat(data.length);
+            }
+          },
+          {
+            data: 'is_deleted', title: 'Is Deleted?', render: function (data) {
+              if (data == false) {
                 return `<span class='badge text-bg-success'>Active</span>`
-              }else {
+              } else {
                 return `<span class='badge text-bg-danger'>Inactive</span>`
               }
-            } },
-            { 
-              data: 'id',
-              title: 'Action',
-              render: function(data) {
-                return `
+            }
+          },
+          {
+            data: 'id',
+            title: 'Action',
+            render: function (data) {
+              return `
                   <button onclick="editStudent(${data})" class='btn btn-sm btn-primary mr-4'>Edit</button>
                   <button onclick="deleteStudent(${data})" class='btn btn-sm btn-danger'>Delete</button>
                 `;
-              }
             }
-          ]
+          }
+        ]
       });
     })
   </script>
 </body>
+
 </html>

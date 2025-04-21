@@ -99,16 +99,18 @@ $stmt->close();
                 <div class="col-6 col-lg-3">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Sex</label>
-                    <select class="form-select" name="sex" required>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
+                    <select class="form-select" disabled>
+                      <option value="<?php echo $userData['sex']; ?>"><?php echo $userData['sex']; ?></option>
                     </select>
+                    <input type="hidden" name="sex" value="<?php echo $userData['sex']; ?>">
                   </div>
                 </div>
                 <div class="col-6 col-lg-3">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Birthday</label>
-                    <input type="date" class="form-control" name="birthday" required />
+                    <input type="date" class="form-control" value="<?php echo $userData['birthday']; ?>"
+                      disabled />
+                    <input type="hidden" name="birthday" value="<?php echo $userData['birthday']; ?>">
                   </div>
                 </div>
               </div>
@@ -218,20 +220,30 @@ $stmt->close();
                 ?>
               </div>
 
-              <div class="form-group mt-4">
-                <label class="form-label fw-semibold">Purpose</label>
-                <select class="form-select" name="request_purpose">
-                  <option value="Enrollment Purpose">Enrollment Purpose</option>
-                  <option value="Employment Purpose">Employment Purpose</option>
-                  <option value="others">Others: (Please indicate)</option>
-                </select>
-              </div>
+
             </div>
           </div>
         </div>
 
         <div class="col-12 col-md-6">
           <div class="card mt-2 mt-lg-0">
+            <div class="card-header">
+              <h5>Purpose of Request</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <select class="form-select" name="request_purpose" id="requestPurposeSelect">
+                  <option value="Enrollment Purpose">Enrollment Purpose</option>
+                  <option value="Employment Purpose">Employment Purpose</option>
+                  <option value="others">Others: (Please indicate)</option>
+                </select>
+                <input type="text" id="otherPurposeInput" class="form-control mt-2"
+                  placeholder="Please indicate your purpose" style="display: none;" />
+              </div>
+            </div>
+           
+          </div>
+          <div class="card mt-2 mt-lg-4">
             <div class="card-header">
               <h5>Pickup Type</h5>
             </div>
@@ -277,6 +289,32 @@ $stmt->close();
   </main>
 
   <script>
+    $(document).ready(function () {
+      $('#requestPurposeSelect').on('change', function () {
+        const isOthers = $(this).val() === 'others';
+        $('#otherPurposeInput').toggle(isOthers);
+
+        // If "Others" is selected, make sure the input is required
+        $('#otherPurposeInput').prop('required', isOthers);
+      });
+
+      // Optional: On form submit, update the value of the select
+      $('#requestForm').on('submit', function () {
+        if ($('#requestPurposeSelect').val() === 'others') {
+          // Replace select's value with the text input's value
+          const otherValue = $('#otherPurposeInput').val();
+          $('<input>').attr({
+            type: 'hidden',
+            name: 'request_purpose',
+            value: otherValue
+          }).appendTo(this);
+
+          // Prevent the select value "others" from being submitted
+          $('#requestPurposeSelect').prop('disabled', true);
+        }
+      });
+    });
+
     $(document).ready(function () {
       // Show/Hide file input based on radio selection
       $('input[name="pickup_type"]').change(function () {

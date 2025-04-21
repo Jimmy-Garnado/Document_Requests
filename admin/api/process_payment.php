@@ -105,7 +105,7 @@ function process_payment($request_id, $file, $transaction_number, $payment_date)
   $paymentStatus = "Paid";
 
   $stmt = $conn->prepare("UPDATE v2_requests SET payment_status = ? WHERE request_id = ?");
-  $stmt->bind_param("si", $paymentStatus, $request_id);
+  $stmt->bind_param("ss", $paymentStatus, $request_id);
 
   if ($stmt->execute()) {
     $getClientStmt = $conn->prepare("SELECT email, student_id, total_price FROM v2_requests WHERE request_id = ?");

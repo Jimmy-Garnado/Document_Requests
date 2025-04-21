@@ -88,21 +88,19 @@ if (!isset($_GET['r'])) {
             <h5 class="modal-title" id="processPaymentModalLabel">Upload Attachments</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <form id="uploadForm">
+          <form id="uploadForm" enctype="multipart/form-data">
             <div class="modal-body">
               <input type="hidden" name="request_id" value="<?php echo $requestID; ?>">
               <input type="file" name="to_upload[]" class="form-control" id="authImages" multiple accept="image/*">
               <div class="preview">
 
               </div>
-                
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Upload</button>
+              <button type="submit" class="btn btn-primary" id="uploadButton">Upload</button>
             </div>
           </form>
-
         </div>
       </div>
     </div>
@@ -322,16 +320,59 @@ if (!isset($_GET['r'])) {
   </main>
 
   <script>
+    $("#uploadForm").on("submit", function(e) {
+      e.preventDefault();
+
+      var formData = new FormData(this);
+
+      $.ajax({
+        url: 'api/upload_attachments.php',
+        type: 'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend: () => {
+          $("#uploadButton").attr('disabled', true);
+          $("#uploadButton").html("Uploading (do not reload the page)...");
+        },
+        success: response => {
+          try {
+            let json = JSON.parse(response);
+
+            if (json.status === true) {
+              Swal.fire({
+                title: json.message,
+                text: json.description,
+                icon: "success",
+                confirmButtonText: "Ok"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
+            } else {
+              Swal.fire({
+                title: json.message,
+                text: json.description,
+                icon: "error"
+              });
+            }
+          } catch (err) {
+            console.error("Invalid JSON response", err);
+            Swal.fire("Oops", "Unexpected response from server.", "error");
+          } finally {
+            $("#uploadButton").attr('disabled', false);
+            $("#uploadButton").html("Upload");
+          }
+        }
+      })
+
+    })
+
     $('#authImages').on('change', function () {
       let files = this.files;
       let previewContainer = $('.preview');
       previewContainer.empty(); // Clear previous images
-
-      if (files.length < 2) {
-        alert("Please select at least 2 images.");
-        $(this).val(''); // Reset input
-        return;
-      }
 
       $.each(files, function (index, file) {
         let reader = new FileReader();

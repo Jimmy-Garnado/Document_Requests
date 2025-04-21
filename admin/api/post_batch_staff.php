@@ -38,8 +38,6 @@
           $username = $sanitizedName . '.' . $sanitizedRole;
         }
 
-        
-
         if(empty($password)){
           $password = generatePassword();
         }

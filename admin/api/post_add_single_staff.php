@@ -22,6 +22,7 @@
   
   $password = generatePassword();
 
+
   $insert = $conn -> query("INSERT INTO staff(name, role, position, username, password) VALUES(
     '$name','$role','$position', '$username', '$password'
   )");

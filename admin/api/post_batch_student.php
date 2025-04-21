@@ -33,12 +33,16 @@
 
         $password = generatePassword();
 
+        $default_password = "@Student1";
+
         // Prepare and bind the SQL insert statement
-        $insert = $conn -> query("INSERT INTO users(stuid, stuname, stuemail, stupassword) VALUES(
+        $insert = $conn -> query("INSERT INTO users(stuid, stuname, stuemail, email, stupassword, default_password) VALUES(
           '$stuid',
           '$stuname',
           '$stuemail',
-          '$password')");
+          '$stuemail',
+          '$default_password',
+          '$default_password')");
 
         if($insert){
           sendEmailConfirmation($stuemail, $stuname, $password);
