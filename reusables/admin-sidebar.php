@@ -116,7 +116,7 @@
 
 <nav class="navbar d-lg-none" id="mobile-header">
   <div class="container-fluid">
-    <a class="navbar-brand" href="request.php">BPC E-Registrar 2024</a>
+    <a class="navbar-brand" href="request.php">BPC E-Registrar 2025</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

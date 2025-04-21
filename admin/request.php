@@ -18,7 +18,7 @@ include_once("api/connection.php");
     <?php include("../reusables/admin-sidebar.php"); ?>
 
     <section class="col-12 col-lg-10 p-2 p-lg-4">
-      <h4 class="mb-4 fw-bold">REQUEST</h4>
+      <h4 class="mb-4 fw-bold">Document Requests</h4>
       <div class='table-responsive'>
         <table id="example" class="display table">
           <thead>

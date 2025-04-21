@@ -122,9 +122,9 @@ if ($_SESSION['staffrole'] != "Admin") {
               <div class="col-12 d-flex flex-column gap-2">
                 <h6 class="mb-2 fw-bold">Management</h6>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#createstudentmodal"
-                  class="btn btn-warning">Single</button>
+                  class="btn btn-warning">Single Entry</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#createbatchstudentmodal"
-                  class="btn btn-warning">Import</button>
+                  class="btn btn-warning">Batch</button>
               </div>
             </div>
           </div>
