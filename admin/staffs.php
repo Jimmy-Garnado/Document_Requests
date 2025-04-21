@@ -178,8 +178,12 @@ include_once("api/connection.php");
               text: response,
               icon: 'error',
               confirmButtonText: 'OK'
-            });
-          }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
+            }
         },
         error: function (xhr, status, error) {
           Swal.fire({
