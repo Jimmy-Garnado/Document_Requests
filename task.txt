@@ -39,7 +39,7 @@ fA5X07~:JT$
 smtp.hostinger.com
 
 USERNAME	    PASSWORD
-MA21012191	  arieljericko
+MA21012191	  jimmy
 bpc-admin	    @bpcadmin123
 bpc-cashier	  @bpccashier123
 bpc-staff	    @bpcstaff123
