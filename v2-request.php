@@ -14,7 +14,7 @@ $userData = [];
 if ($result->num_rows > 0) {
   $userData = $result->fetch_assoc();
 } else {
-  header("location: index.html");
+  header("location: index.php");
   exit();
 }
 

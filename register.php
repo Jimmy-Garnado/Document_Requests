@@ -66,7 +66,7 @@
         </div>
         <button type="submit" class="btn btn-success btn-lg w-100">Register</button>
       </form>
-      <a href="index.html" class="btn btn-link mt-3">Log In</a>
+      <a href="index.php" class="btn btn-link mt-3">Log In</a>
     </div>
     <h6 class="mt-4 text-white">BPC E-Registrar 2024</h6>
   </main>
