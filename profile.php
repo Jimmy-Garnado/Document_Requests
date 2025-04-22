@@ -131,6 +131,28 @@ $row = $select->fetch_assoc();
                       <label class="form-label mb-0 fw-semibold">Student Email</label>
                       <input name="stuemail" type="text" class="mt-2 form-control" value="<?php echo $row['stuemail']; ?>" readonly />
                     </div>
+                    <div class="form-group mb-2">
+                      <label class="form-label mb-0 fw-semibold">Year</label>
+                      <select class="form-select" name="student_year" required>
+                        <option value="1st" <?= ($row['student_year'] == '1st') ? 'selected' : '' ?>>1st</option>
+                        <option value="2nd" <?= ($row['student_year'] == '2nd') ? 'selected' : '' ?>>2nd</option>
+                        <option value="3rd" <?= ($row['student_year'] == '3rd') ? 'selected' : '' ?>>3rd</option>
+                        <option value="4th" <?= ($row['student_year'] == '4th') ? 'selected' : '' ?>>4th</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-2">
+                      <label class="form-label mb-0 fw-semibold">Section</label>
+                      <select class="form-select" name="student_section">
+                      <?php
+                      $get_all_sections = $conn->query("SELECT name FROM sections");
+                      while ($section = $get_all_sections->fetch_assoc()) {
+                        $selected = ($section['name'] == $row['student_section']) ? 'selected' : '';
+                        echo "<option value='{$section['name']}' $selected>{$section['name']}</option>";
+                      }
+                      ?>
+                    </select>
+                    </div>
+                    
                   </div>
                 </div>
               </div>

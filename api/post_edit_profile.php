@@ -10,6 +10,8 @@
   $province = $_POST['province'];
   $sex = $_POST['sex'];
   $birthday = $_POST['birthday'];
+  $student_year = $_POST['student_year'];
+  $student_section = $_POST['student_section'];
 
   $update = $conn -> query("UPDATE users SET 
     sex='$sex',
@@ -19,7 +21,9 @@
     street='$street',
     barangay='$barangay',
     city='$city',
-    province='$province'
+    province='$province',
+    student_year='$student_year',
+    student_section='$student_section'
     WHERE stuid='$stuid'
   ");
 
