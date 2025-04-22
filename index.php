@@ -144,7 +144,7 @@
             <h6 class="mt-4">Contact Us</h6>
             <p>
               If you have any questions regarding this Privacy Notice, please
-              contact us at [email address].
+              contact us at bpc@gmail.com.
             </p>
 
             <div class="form-check mt-4">
@@ -166,7 +166,7 @@
               id="agreeButton"
               disabled
             >
-              I Agreed To Privacy Policy
+              Proceed
             </button>
           </div>
         </div>
@@ -222,7 +222,7 @@
           </div>
           <div class="modal-body p-4">
             <form id="forgot_password_form">
-              <p><strong>Students:</strong> Please enter your Student ID (ex. MA233211). </p>
+              <p><strong>Students:</strong> Please enter your Student ID (ex. MA23321111). </p>
               <p><strong>Staffs:</strong> If you are a staff member, please contact your administrator to reset your password.</p>
               <input type="text" placeholder="MA23321175" name="email_fp" class="mt-4 form-control" />
               <button class="mt-4 btn btn-success" id="reset_password_button">Reset Password</button>
