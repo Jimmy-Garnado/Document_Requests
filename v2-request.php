@@ -195,6 +195,7 @@ $stmt->close();
                       <option value="2nd">2nd</option>
                       <option value="3rd">3rd</option>
                       <option value="4th">4th</option>
+                      <option value="Graduate">Graduate</option>
                     </select>
                   </div>
                 </div>
