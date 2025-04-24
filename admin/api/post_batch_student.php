@@ -63,7 +63,7 @@
           echo json_encode([
             "status" => "error",
             "title" => "Invalid Student Email",
-            "description" => "Student email is not a Gmail address. Import process stopped. [ROW: $count]"
+            "description" => "The student's email address is not a Gmail account. Import process stopped. [ROW: $count]"
           ]);
 
           exit(); // Stop further processing
