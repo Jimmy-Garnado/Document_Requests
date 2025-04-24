@@ -3,7 +3,7 @@
 
   $staffid = $_POST['staffid'];
 
-  $delete = $conn -> query("UPDATE staff SET flag=1 WHERE id=$staffid");
+  $delete = $conn -> query("DELETE FROM staff WHERE id=$staffid");
 
   if($delete){
     echo "ok";

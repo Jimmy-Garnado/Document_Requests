@@ -70,12 +70,19 @@
             <label for="stuid" class="form-label fw-semibold">User ID</label>
             <input type="text" class="form-control" name="user_id" />
           </div>
-          <div class="mb-4">
+          <label for="stupassword" class="form-label fw-semibold  mt-4"
+              >Password</label
+            >
+          <div class="input-group mb-4">
+            <input type="password" class="form-control" name="user_password" />
+            <button class="btn btn-primary" type="button" id="show-hide-button">Show</button>
+          </div>
+          <!-- <div class="mb-4">
             <label for="stupassword" class="form-label fw-semibold"
               >Password</label
             >
             <input type="password" class="form-control" name="user_password" />
-          </div>
+          </div> -->
           <button
             type="submit"
             id="btnLOGIN"
@@ -238,6 +245,19 @@
           $('#agreeButton').prop('disabled', !this.checked);
         });
       });
+
+      $('#show-hide-button').on('click', function () {
+      const passwordInput = $("input[name='user_password']");
+      const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+
+      if(type === "password"){
+        $('#show-hide-button').text("Show")
+      }else {
+        $('#show-hide-button').text("Hide")
+      }
+
+      passwordInput.attr('type', type);
+    });
       
       $("#verification_form").on("submit", function (event) {
         event.preventDefault();
