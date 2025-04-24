@@ -162,7 +162,7 @@
           </a>
           <a class='nav-link' href='archive.php'>
             <i class='fa-regular fa-file'></i>
-            <span>Archive</span>
+            <span>History</span>
           </a>
           <a class='nav-link' href='supported_documents.php'>
             <i class='fa-solid fa-gear'></i>
