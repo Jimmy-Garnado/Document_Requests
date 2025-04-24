@@ -123,8 +123,6 @@ function process_payment($request_id, $file, $transaction_number, $payment_date)
       $logStmt = $conn->prepare("INSERT INTO payment_logs (transaction_number, request_id, payment_date, amount, client_id) VALUES (?, ?, ?, ?, ?)");
       $logStmt->bind_param("sssds", $transaction_number, $request_id, $payment_date, $amount, $client_id);
 
-
-
       if ($logStmt->execute()) {
         SendEmailConfirmation($email, $request_id, $transaction_number, $payment_date);
       }

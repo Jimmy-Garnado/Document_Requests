@@ -228,10 +228,6 @@
         <i class='fa-regular fa-file'></i>
         <span>Requests</span>
       </a>
-      <a href='processing.php'>
-        <i class='fa-regular fa-file'></i>
-        <span>In-Processing</span>
-      </a>
       <a href='for-release.php'>
         <i class='fa-regular fa-file'></i>
         <span>For Release</span>

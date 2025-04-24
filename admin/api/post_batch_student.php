@@ -16,20 +16,59 @@
     return $randomPassword;
   }
 
-  // Check if file was uploaded
   if (isset($_FILES['batchstudent']) && $_FILES['batchstudent']['error'] == 0) {
-
     $filePath = $_FILES['batchstudent']['tmp_name'];
-    // Load the Excel file
+
     try {
       $spreadsheet = IOFactory::load($filePath);
       $sheet = $spreadsheet -> getActiveSheet();
+      $count = 2;
 
-      // Loop through rows, starting from the second row if the first contains headers
       foreach ($sheet -> getRowIterator(2) as $row) {
         $stuid = $sheet -> getCell('A' . $row->getRowIndex())->getValue();
         $stuname = $sheet -> getCell('B' . $row->getRowIndex())->getValue();
         $stuemail = $sheet -> getCell('C' . $row->getRowIndex())->getValue();
+
+        if (empty($stuid)) {
+          echo json_encode([
+            "status" => "error",
+            "title" => "No Student Id",
+            "description" => "Student ID is missing. Import process stopped. [ROW: $count]"
+          ]);
+
+          exit(); // Stop further processing
+        }
+
+        if (empty($stuname)) {
+          echo json_encode([
+            "status" => "error",
+            "title" => "No Student Name",
+            "description" => "Student name is missing. Import process stopped. [ROW: $count]"
+          ]);
+
+          exit(); // Stop further processing
+        }
+
+        if (empty($stuemail)) {
+          echo json_encode([
+            "status" => "error",
+            "title" => "No Student Email",
+            "description" => "Student name is missing. Import process stopped. [ROW: $count]"
+          ]);
+
+          exit(); // Stop further processing
+        }
+        // Check if email already exists
+        $check = $conn->query("SELECT * FROM users WHERE stuemail = '$stuemail'");
+        if ($check->num_rows > 0) {
+          echo json_encode([
+            "status" => "error",
+            "title" => "Duplicate Email",
+            "description" => "The email [$stuemail] already exists in the system. Import process stopped. [ROW: $count]"
+          ]);
+
+          exit(); // Stop further processing
+        }
 
         $password = generatePassword();
 
@@ -47,16 +86,19 @@
         if($insert){
           sendEmailConfirmation($stuemail, $stuname, $password);
         }
+
+        $count = $count + 1;
       }
+
     } catch (Exception $e) {
-      echo "Error loading file: " . $e -> getMessage();
+      echo json_encode(["status" => "error", "title" => "Incorrect Template", "description" => "Incorrect template, please download template from the website."]);
+      exit(); // Stop further processing
     }
 
-    echo "ok";
+    echo json_encode(["status" => "success", "title" => "Upload Success", "description" => "Student batch successfully added to the list"]);
   } else {
-    echo "File upload error.";
+    echo json_encode(["status" => "error", "title" => "File Upload Error", "description" => "Re-upload file again after a few minutes."]);
   }
-
 
   $conn -> close();
 ?>

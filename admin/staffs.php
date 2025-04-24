@@ -197,6 +197,7 @@ include_once("api/connection.php");
 
     $("#addbatchstaffform").submit(function (e) {
       e.preventDefault();
+      toggleLoadingModal();
 
       const formData = new FormData(this);
 
@@ -207,25 +208,18 @@ include_once("api/connection.php");
         contentType: false,
         processData: false,
         success: function (response) {
-          if (response.trim() === "ok") {
-            Swal.fire({
-              title: 'Members Added Successfully',
-              text: 'New Members has been Added.',
-              icon: 'success',
-              confirmButtonText: 'Reload Page'
+          let json = JSON.parse(response)
+
+          Swal.fire({
+              title: json.title,
+              text: json.description,
+              icon: json.status,
+              confirmButtonText: 'Refresh'
             }).then((result) => {
               if (result.isConfirmed) {
                 location.reload();
               }
             });
-          } else {
-            Swal.fire({
-              title: 'Error',
-              text: response,
-              icon: 'error',
-              confirmButtonText: 'OK'
-            });
-          }
         },
         error: function (xhr, status, error) {
           Swal.fire({

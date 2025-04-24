@@ -49,6 +49,22 @@ $stmt->close();
       max-height: 200px;
       object-fit: cover;
     }
+
+    .document-list {
+      border-radius: 4px;
+      background-color: #00ff0045;
+      padding: 1rem;
+    }
+
+    .card-header {
+      background-color: #272727;
+      color: white;
+    }
+
+    section {
+      background-color: #cacaca;
+      padding-bottom: 1rem;
+    }
   </style>
 
 
@@ -71,12 +87,12 @@ $stmt->close();
               </div>
               <p class="mb-4">Please send your payment via the following options:</p>
               <div class="mb-4 d-flex flex-column">
-                <p class="h5 fw-bold">Scan QR Code</p>
+                <p class="h6 fw-bold">Scan QR Code</p>
                 <img src="images/sample-qr.png" alt="GCash QR Code" class="align-self-center img-fluid">
               </div>
 
               <div class="mb-4">
-                <p class="h5 fw-bold">GCash Number</p>
+                <p class="h6 fw-bold">GCash Number</p>
                 <p style="
                 font-size: 18px;
                 background-color: var(--bs-blue);
@@ -85,10 +101,20 @@ $stmt->close();
                 ">09-637-205-895 - BPC Cashier</p>
               </div>
 
-              <div>
-                <p class="h5 fw-bold">Upload Receipt</p>
+              <div class="mb-4">
+                <p class="h6 fw-bold">Payment Date</p>
+                <input type="date" name="payment_date_ui" class="form-control" disabled>
+                <input type="hidden" name="payment_date" class="form-control">
+              </div>
+              <div class="mb-4">
+                <p class="h6 fw-bold">Upload Receipt</p>
                 <input type="file" name="receipt" class="form-control" id="receipt" required accept="image/*">
                 <small class="form-text text-muted">Kindly upload a screenshot or photo of your payment receipt.</small>
+              </div>
+              <div>
+                <p class="h6 fw-bold">Transaction Number</p>
+                <input type="text" name="transaction_number" class="form-control" required>
+                <small class="form-text text-muted">Make sure it is same with reciept reference number or else your payment will be invalid.</small>
               </div>
             </div>
             <div class="modal-footer">
@@ -145,7 +171,7 @@ $stmt->close();
                       class="form-control" disabled />
                   </div>
                 </div>
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-4 mt-4 mt-lg-0">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Mobile No</label>
                     <input type="text" value="<?php echo $userData['contact_number']; ?>" class="form-control"
@@ -161,7 +187,7 @@ $stmt->close();
                       required />
                   </div>
                 </div>
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6 mt-4 mt-lg-0">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Year Completed (SLA)</label>
                     <input type="date" class="form-control" name="school_last_attended_graduated" required />
@@ -169,13 +195,13 @@ $stmt->close();
                 </div>
               </div>
               <div class="row mt-4">
-                <div class="col-12 col-lg-2">
+                <div class="col-12 col-lg-4 mb-4 mb-lg-0">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Student ID</label>
                     <input type="text" value="<?php echo $userData['stuid']; ?>" class="form-control" disabled />
                   </div>
                 </div>
-                <div class="col-6 col-lg-3">
+                <div class="col-6 col-lg-4">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Course</label>
                     <select class="form-select" name="student_course" required>
@@ -187,7 +213,7 @@ $stmt->close();
                     </select>
                   </div>
                 </div>
-                <div class="col-6 col-lg-3">
+                <div class="col-6 col-lg-4">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Year</label>
                     <select class="form-select" name="student_year" required>
@@ -195,11 +221,10 @@ $stmt->close();
                       <option value="2nd">2nd</option>
                       <option value="3rd">3rd</option>
                       <option value="4th">4th</option>
-                      <option value="Graduate">Graduate</option>
                     </select>
                   </div>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-12 col-lg-6 mt-0 mt-lg-4">
                   <div class="form-group">
                     <label class="form-label fw-semibold">Section</label>
                     <select class="form-select" name="student_section">
@@ -213,15 +238,24 @@ $stmt->close();
                     </select>
                   </div>
                 </div>
-                <div class="mt-4 col-6 col-lg-5">
+                <div class="mt-4 col-12 col-lg-6">
                   <div class="form-group">
-                    <label class="form-label fw-semibold">Date of Graduation</label>
-                    <input type="date" class="form-control" name="date_of_graduation" required />
+                  <label class="form-label fw-semibold">Are you a graduate?</label>
+                    <select class="form-select mb-3" id="isGraduateSelect">
+                      <option value="no">Not Yet</option>
+                      <option value="yes">Graduated</option>
+                    </select>
+
+                    <!-- Date of Graduation -->
+                    <div id="graduationDateWrapper" class="mb-4 mb-lg-0">
+                      <label class="form-label fw-semibold">Date of Graduation</label>
+                      <input type="date" class="form-control" name="date_of_graduation" required />
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div class="form-group mt-4">
+              <div class="form-group document-list">
                 <label class="form-label fw-semibold">Document To Request</label>
                 <?php
                 include("api/connection.php");
@@ -241,24 +275,14 @@ $stmt->close();
 
                   $requirementsText = is_array($decoded) ? implode(', ', $decoded) : '';
                   echo "
-                    <div class='form-check d-flex flex-column mb-4'>
-                      <div class='row'>
-                        <div class='col-1'>
+                    <div class='form-check d-flex flex-column mb-2'>
+                      <div class='check-item'>
                           <input class='form-check-input' name='document_to_request[]' type='checkbox' value='" . $row['name'] . "' data-price='" . $row['price'] . "' />
-                        </div>
-                        <div class='col-8'>
-                          <p class='form-check-label fw-semibold'>" . $row['name'] . " </p>
-                        </div>
-                        <div class='col-3 '>
+                          <div class='check-item-name'>
+                            <p class='form-check-label fw-semibold'>" . $row['name'] . " </p>
+                            <p class='fst-italic'>{$requirementsText}</p>
+                          </div>
                           <p class='fw-semibold text-right'>PHP " . $row['price'] . ".00</p>
-                        </div>
-                      </div>
-                      <div class='row'>
-                        <div class='col-1'></div>
-                        <div class='col-8'>
-                          <p class='fst-italic'>{$requirementsText}</p>
-                        </div>
-                      <div class='col-3'></div>
                       </div>
                     </div>
                   ";
@@ -267,14 +291,42 @@ $stmt->close();
                 $conn->close();
                 ?>
               </div>
+              <style>
+                .check-item {
+                  display: flex;
+                  flex-direction: "row";
+                }
 
+                .check-item > input {
+                  margin-right: 1rem;
+                }
+
+                @media (max-width: 992px) {
+                  .check-item > p {
+                    font-size: 10px;
+                  }
+                  .check-item > div {
+                    font-size: 12px;
+                  }
+                }
+
+                .check-item > div {
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                }
+
+                .check-item > p {
+                  margin-left: auto;
+                }
+              </style>
 
             </div>
           </div>
         </div>
 
         <div class="col-12 col-md-6">
-          <div class="card mt-2 mt-lg-0">
+          <div class="card mt-4 mt-lg-0">
             <div class="card-header">
               <h5>Purpose of Request</h5>
             </div>
@@ -291,7 +343,7 @@ $stmt->close();
             </div>
 
           </div>
-          <div class="card mt-2 mt-lg-4">
+          <div class="card mt-4 mt-lg-4">
             <div class="card-header">
               <h5>Pickup Type</h5>
             </div>
@@ -306,23 +358,23 @@ $stmt->close();
                 <label class="form-check-label" for="authorizedPerson">Authorized Person</label>
               </div>
               <div id="authUploadSection" class="mt-3 d-none">
-                <p class="fw-semibold">AUTHORIZED PERSON NAME</p>
+                <label class="form-label fw-semibold">Authorized Person Name</label>
                 <input type="text" name="authorized_person_name" value="None" class="form-control" required>
-                <p class="fw-semibold mt-4">RELATIONSHIP</p>
+                
+                <label class="fw-semibold form-label mt-4">Relationship</label>
                 <select name="authorized_person_relationship" class="form-control" required>
                   <option>Sibling</option>
                   <option>Parent</option>
                   <option>Spouse</option>
                 </select>
-                <label for="authImages" class="form-label fw-semibold mt-4">2 VALID IDs AND RECENT SELFIE OF AUTHORIZED
-                  PERSON</label>
+                <label for="authImages" class="form-label fw-semibold mt-4">Valid ID and Selfie of Authorized Person</label>
                 <input type="file" name="authorized_person_attachments[]" class="form-control" id="authImages" multiple
                   accept="image/*">
                 <div class="preview mt-2"></div>
               </div>
             </div>
           </div>
-          <div class="card mt-2 mt-lg-4">
+          <div class="card mt-4 mt-lg-4">
             <div class="card-header">
               <h5>Attachments</h5>
             </div>
@@ -339,6 +391,29 @@ $stmt->close();
   <script>
     var REQUEST_FORM_DATA = [];
     var TOTAL_PRICE = 0;
+
+
+    function toggleGraduationDate() {
+      if ($('#isGraduateSelect').val() === 'yes') {
+        $('#graduationDateWrapper').show();
+        $("input[name='date_of_graduation']").prop('required', true);
+      } else {
+        $('#graduationDateWrapper').hide();
+        $("input[name='date_of_graduation']").prop('required', false);
+        $("input[name='date_of_graduation']").val(''); // Clear the actual input if not needed
+      }
+    }
+
+    toggleGraduationDate();
+
+    $('#isGraduateSelect').on('change', toggleGraduationDate);
+    $('#isGraduateSelect').trigger('change');
+
+    $(document).ready(function () {
+      let today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      $('input[name="payment_date_ui"]').val(today);
+      $('input[name="payment_date"]').val(today);
+    });
 
     $("#requestForm").submit(function (e) {
       e.preventDefault();
@@ -381,9 +456,13 @@ $stmt->close();
             console.error("Invalid JSON response", err);
             Swal.fire("Oops", "Unexpected response from server.", "error");
           } finally {
-            $("#submitButton").attr('disabled', false);
-            $("#submitButton").html("Submit");
+            $("#submit-request-btn").attr('disabled', false);
+            $("#submit-request-btn").html("Submit");
           }
+        },
+        complete: () => {
+          $("#submit-request-btn").attr('disabled', false);
+          $("#submit-request-btn").html("Submit");
         },
         error: () => {
           Swal.fire("Error", "Request failed. Please try again.", "error");

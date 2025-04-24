@@ -228,16 +228,25 @@ if (!isset($_GET['request_id'])) {
               <i class='fas fa-envelope me-1'></i> Send Message
             </button>";
 
-            if ($row['status'] === "Pending") {
-              echo "
-                  <button class='btn btn-danger ms-auto reject-button' data-request-id='{$row['request_id']}'>
+            if (($row['status'] === "Pending" || $row['status'] === "Processing") && $row['payment_status'] == "Paid") {
+              // echo "
+              //     <button class='btn btn-danger ms-auto reject-button' data-request-id='{$row['request_id']}'>
+              //       <i class='fas fa-x me-1'></i> Reject
+              //     </button>
+
+              //     <button class='btn btn-success ms-auto approve-button' data-request-id='{$row['request_id']}'>
+              //       <i class='fas fa-check me-1'></i> Approve
+              //     </button>
+              //   ";
+
+                echo "
+                <button class='btn btn-danger ms-auto reject-button' data-request-id='{$row['request_id']}'>
                     <i class='fas fa-x me-1'></i> Reject
                   </button>
-
-                  <button class='btn btn-success ms-auto approve-button' data-request-id='{$row['request_id']}'>
-                    <i class='fas fa-check me-1'></i> Approve
-                  </button>
-                ";
+                <button class='btn btn-success schedule-release-button' data-request-id='{$row['request_id']}'>
+                  <i class='fas fa-clock me-1'></i> Schedule Release
+                </button>
+              ";
             }
 
             if ($row['status'] === "Processing") {
@@ -314,7 +323,13 @@ if (!isset($_GET['request_id'])) {
               </div>
               <div class="row mb-2">
                 <div class="col-md-5"><strong>Date of Graduation:</strong></div>
-                <div class="col-md-7"><?php echo date('F d, Y', strtotime($row['date_of_graduation'])); ?></div>
+                <?php
+                  if ($row['date_of_graduation'] === '0000-00-00') {
+                      echo 'Not graduated';
+                  } else {
+                      echo date('F d, Y', strtotime($row['date_of_graduation']));
+                  }
+                ?>
               </div>
               <div class="row mb-2">
                 <div class="col-md-5"><strong>Permanent Address:</strong></div>

@@ -4,6 +4,58 @@ date_default_timezone_set('Asia/Manila');
 include_once("../connection.php");
 session_start();
 
+require '../../vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+function SendEmailConfirmation($client_email, $request_id, $transaction_number, $payment_date)
+{
+  $mail = new PHPMailer(true);
+
+  try {
+    $mail->isSMTP();
+    $mail->Host = 'smtp.hostinger.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'support@bpceregistrar.online';
+    $mail->Password = 'fA5X07~:JT$';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+    $mail->isHTML(true);
+    $mail->setFrom('support@bpceregistrar.online', 'BPC E-Registrar');
+
+
+    $mail->addAddress($client_email);
+
+    // Email content
+    $mail->isHTML(true);
+    $mail->Subject = 'Payment Confirmation for Request #' . $request_id;
+
+    $mail->Body = '
+      <p>Dear Client,</p>
+      <p>We are pleased to confirm that your payment for Request 
+      <strong>
+        <a href="http://localhost/bpc-main/view.php?r=' . urlencode($request_id) . '">
+          #' . htmlspecialchars($request_id) . '
+        </a>
+      </strong> has been successfully processed.</p>
+      <ul>
+        <li><strong>Transaction Number:</strong> ' . htmlspecialchars($transaction_number) . '</li>
+        <li><strong>Payment Date:</strong> ' . htmlspecialchars(date("F d, Y", strtotime($payment_date))) . '</li>
+      </ul>
+      <p>If you have any questions, please feel free to contact us.</p>
+      <p>Best regards,<br>BPC Registrar</p>
+    ';
+
+    // Send the email
+    $mail->send();
+
+    return true;
+  } catch (Exception $e) {
+    return false;
+  }
+}
+
 $stuid = $_SESSION['stuid'];
 
 $user = $conn->query("SELECT stuemail, stuname, street, barangay, city, province, contact_number FROM users WHERE stuid='$stuid' LIMIT 1");
@@ -108,6 +160,9 @@ $authorized_person_relationship = $_POST['authorized_person_relationship'];
 $student_year = $_POST['student_year'];
 $student_section = $_POST['student_section'];
 
+$payment_date = $_POST['payment_date'];
+$transaction_number = $_POST['transaction_number'];
+
 $total_price = 0;
 $document_to_request = $_POST['document_to_request']; // assuming it's an array
 
@@ -156,7 +211,7 @@ $stmt = $conn->prepare("INSERT INTO v2_requests (
 ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 $documents = json_encode($document_to_request);
-$payment_status = "Not Paid";
+$payment_status = "Paid";
 $stmt->bind_param(
   "sssssssssssssssssssdssss",
   $request_id,
@@ -186,11 +241,26 @@ $stmt->bind_param(
 );
 
 if ($stmt->execute()) {
-  echo json_encode([
+  $logStmt = $conn->prepare("INSERT INTO payment_logs (transaction_number, request_id, payment_date, amount, client_id) VALUES (?, ?, ?, ?, ?)");
+  $logStmt->bind_param("sssds", $transaction_number, $request_id, $payment_date, $total_price, $student_id);
+
+  if ($logStmt->execute()) {
+    SendEmailConfirmation($email, $request_id, $transaction_number, $payment_date);
+    
+    echo json_encode([
       "message" => "Success",
       "description" => "Request submitted successfully.",
       "status" => true
-  ]);
+    ]);
+  }else {
+    echo json_encode([
+      "message" => "Payment Failed",
+      "description" => "Failed to pay request. " . $stmt->error,
+      "status" => false
+    ]);
+  }
+
+  
 } else {
   echo json_encode([
       "message" => "Error",

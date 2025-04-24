@@ -1,0 +1,4 @@
+.vscode
+vendor
+api/connection.php
+admin/api/connection.php

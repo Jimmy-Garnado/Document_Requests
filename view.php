@@ -44,8 +44,11 @@ if (!isset($_GET['r'])) {
       object-fit: cover;
     }
 
+    section {
+      background-color: #cacaca;
+    }
     section>div {
-      background-color: #fff;
+      background-color: #cacaca;
       padding: 1rem;
     }
 
@@ -76,6 +79,16 @@ if (!isset($_GET['r'])) {
       color: white;
       font-size: 12px;
       padding: 5px;
+    }
+
+    .card-header {
+      background-color: #272727;
+      color: white;
+    }
+
+    .main-container {
+      background-color: #cacaca;
+      padding-bottom: 1rem;
     }
   </style>
 
@@ -132,36 +145,44 @@ if (!isset($_GET['r'])) {
             </div>
             <div class="card-body">
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Name:</strong></div>
-                <div class="col-md-7"><?php echo $row['name']; ?></div>
+                <div class="col-5"><strong>Name:</strong></div>
+                <div class="col-7"><?php echo $row['name']; ?></div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Email:</strong></div>
-                <div class="col-md-7"><?php echo $row['email']; ?></div>
+                <div class="col-5"><strong>Email:</strong></div>
+                <div class="col-7"><?php echo $row['email']; ?></div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Sex:</strong></div>
-                <div class="col-md-7"><?php echo $row['sex']; ?></div>
+                <div class="col-5"><strong>Sex:</strong></div>
+                <div class="col-7"><?php echo $row['sex']; ?></div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Birthdate:</strong></div>
-                <div class="col-md-7"><?php echo date('F d, Y', strtotime($row['birthday'])); ?></div>
+                <div class="col-5"><strong>Birthdate:</strong></div>
+                <div class="col-7"><?php echo date('F d, Y', strtotime($row['birthday'])); ?></div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Course:</strong></div>
-                <div class="col-md-7"><?php echo $row["student_course"]; ?></div>
+                <div class="col-5"><strong>Course:</strong></div>
+                <div class="col-7"><?php echo $row["student_course"]; ?></div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Year:</strong></div>
-                <div class="col-md-7"><?php echo $row["student_year"]; ?></div>
+                <div class="col-5"><strong>Year:</strong></div>
+                <div class="col-7"><?php echo $row["student_year"]; ?></div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Section:</strong></div>
-                <div class="col-md-7"><?php echo $row["student_section"]; ?></div>
+                <div class="col-5"><strong>Section:</strong></div>
+                <div class="col-7"><?php echo $row["student_section"]; ?></div>
               </div>
               <div class="row mb-2">
-                <div class="col-md-5"><strong>Date of Graduation:</strong></div>
-                <div class="col-md-7"><?php echo date('F d, Y', strtotime($row['date_of_graduation'])); ?></div>
+                <div class="col-5"><strong>Date of Graduation:</strong></div>
+                <div class="col-7">
+                <?php
+                  if ($row['date_of_graduation'] === '0000-00-00') {
+                      echo 'Not graduated';
+                  } else {
+                      echo date('F d, Y', strtotime($row['date_of_graduation']));
+                  }
+                ?>
+              </div>
               </div>
               <div class="row mb-2">
                 <div class="col-md-5"><strong>Permanent Address:</strong></div>
@@ -183,7 +204,7 @@ if (!isset($_GET['r'])) {
               </div>
             </div>
           </div>
-          <div class="card mb-3">
+          <div class="card mt-2 mt-lg-0 mb-4">
             <div class="card-header">
               <h5>Request Details</h5>
             </div>
@@ -208,7 +229,7 @@ if (!isset($_GET['r'])) {
             </div>
           </div>
 
-          <div class="card mb-3">
+          <div class="card mb-4">
             <div class="card-header">
               <h5>Document Types</h5>
             </div>
@@ -228,7 +249,7 @@ if (!isset($_GET['r'])) {
 
         <!-- Right Grid: Status & Info -->
         <div>
-          <div class="card mb-3">
+          <div class="card">
             <div class="card-header">
               <h5>Status</h5>
             </div>

@@ -232,6 +232,7 @@ if ($_SESSION['staffrole'] != "Admin") {
     $("#batchstudentform").submit(function (event) {
       $("#createbatchstudentmodal").modal('toggle')
       toggleLoadingModal();
+
       event.preventDefault();
 
       var formData = new FormData(this);
@@ -243,33 +244,20 @@ if ($_SESSION['staffrole'] != "Admin") {
         contentType: false,
         processData: false,
         success: function (response) {
+          let json = JSON.parse(response)
+
+          Swal.fire({
+              title: json.title,
+              text: json.description,
+              icon: json.status,
+              confirmButtonText: 'Refresh'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+
           toggleLoadingModal();
-
-          if (response.trim() === "ok") {
-            Swal.fire({
-              title: 'Students List Added Successfully',
-              text: 'New students has been added.',
-              icon: 'success',
-              confirmButtonText: 'Refresh Table'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                location.reload();
-              }
-            });
-          } else {
-            $("#createbatchstudentmodal").modal('toggle')
-
-            Swal.fire({
-              title: 'Error',
-              text: response,
-              icon: 'error',
-              confirmButtonText: 'OK'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                location.reload();
-              }
-            });
-          }
         },
         error: function (xhr, status, error) {
           Swal.fire({
