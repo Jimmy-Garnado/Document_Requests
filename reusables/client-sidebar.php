@@ -34,16 +34,30 @@
     margin-top: 1rem;
     text-align: center;
   }
+
   #mobile-header {
     background-color: #073000;
     color: #fff;
+    position: sticky; /* changed from fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
   }
+
+  #mobileOffcanvas {
+    width: 85%;
+    color: white;
+    background-color: #073000;
+  }
+
   .navbar-brand {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
     color: #fff;
   }
+
   .nav-link {
     color: #fff;
     font-size: 18px;
@@ -87,39 +101,42 @@
   <div class="container-fluid p-2">
     <img src="images/bpc-logo.png" width="48px" height="48px">
     <a class="navbar-brand" href="request.php">BPC E-Registrar 2025</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileOffcanvas" aria-controls="mobileOffcanvas">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="mobileMenu">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="request.php">
-            <i class="fa-regular fa-file mr-4"></i>
-            <span>Request Document</span>
-          </a>
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link" href="v2-request.php">
-            <i class="fa-regular fa-file mr-4"></i>
-            <span>Request Document</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="profile.php">
-            <i class="fa-regular fa-user mr-4"></i>
-            <span>Account</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link logoutButton">
-            <i class="fa-solid fa-power-off mr-4"></i>
-            <span>Log Out</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+    
   </div>
 </nav>
+
+<!-- Offcanvas Menu -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mobileOffcanvas" aria-labelledby="mobileOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mobileOffcanvasLabel">Menu</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="v2-request.php">
+          <i class="fa-regular fa-file me-2"></i>
+          <span>Request Document</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="profile.php">
+          <i class="fa-regular fa-user me-2"></i>
+          <span>Account</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link logoutButton">
+          <i class="fa-solid fa-power-off me-2"></i>
+          <span>Log Out</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
 
 <script>
   $(".logoutButton").on("click", function(){
