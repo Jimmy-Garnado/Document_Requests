@@ -79,7 +79,7 @@
             >
           <div class="input-group mb-4">
             <input type="password" class="form-control" name="user_password" />
-            <button class="btn btn-primary" type="button" id="show-hide-button">Show</button>
+            <button class="btn btn-link" type="button" id="show-hide-button">Show</button>
           </div>
           <!-- <div class="mb-4">
             <label for="stupassword" class="form-label fw-semibold"
