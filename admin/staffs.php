@@ -45,6 +45,9 @@ include_once("api/connection.php");
                 <option value="">Select Position</option>
               </select>
             </div>
+            <div class="mb-3">
+          <label class="form-label fw-semibold mt-4">"Upon completion of the form,a username and password will be automatically generated"</label>
+          </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

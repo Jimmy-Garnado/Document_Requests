@@ -109,13 +109,13 @@
     <?php include("reusables/client-sidebar.php"); ?>
     <form id="requestForm" class="w-100" enctype="multipart/form-data">
       <div class="pe-4 ps-4 pt-4 d-flex flex-row justify-space-between align-items-center">
-        <h5>REQUEST DOCUMENT</h5>
+        <h5>Request Documents</h5>
         <button id="submitButton" class="ms-auto btn btn-success" type="submit">Submit Request</button>
       </div>
       <section class="p-4 d-flex flex-column flex-md-row gap-4">
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label fw-semibold">PROGRAM</label>
+            <label class="form-label fw-semibold">Program</label>
             <select class="form-select" name="program">
               <option value="BSIS">BSIS</option>
               <option value="BSOM">BSOM</option>
@@ -125,7 +125,7 @@
             </select>
           </div>
           <div class="form-group mt-4">
-            <label class="form-label fw-semibold">YEAR GRADUATED</label>
+            <label class="form-label fw-semibold">Year Graduated</label>
             <select class="form-select" name="year_graduated">
               <option value="2015">2015</option>
               <option value="2016">2016</option>
@@ -141,7 +141,7 @@
             </select>
           </div>
           <div class="form-group mt-4">
-            <label class="form-label fw-semibold">DOCUMENT TYPE</label>
+            <label class="form-label fw-semibold">Document Type</label>
             <?php
             include("api/connection.php");
 
@@ -161,7 +161,7 @@
             ?>
           </div>
           <div class="form-group mt-4">
-            <label class="form-label fw-semibold">ACADEMIC YEAR</label>
+            <label class="form-label fw-semibold">Academic Year</label>
             <select class="form-select" aria-label="Default select example" name="academic_year">
               <option value="2015">2015</option>
               <option value="2016">2016</option>
@@ -177,13 +177,13 @@
             </select>
           </div>
           <div class="form-group mt-4">
-            <label class="form-label fw-semibold">PURPOSE</label>
+            <label class="form-label fw-semibold">Purpose</label>
             <input type="text" class="form-control" placeholder="For employment" name="purpose" required>
           </div>
 
         </div>
         <div class="col-12 col-lg-6">
-          <p class="fw-semibold">PICKUP TYPE</p>
+          <p class="fw-semibold">Pick-up Type</p>
           <div class="form-check mt-2">
             <input class="form-check-input" type="radio" name="pickupType" id="myself" value="myself" checked>
             <label class="form-check-label" for="myself">Myself</label>
@@ -194,9 +194,9 @@
           </div>
           <!-- Image Upload (Initially Hidden) -->
           <div id="authUploadSection" class="mt-3 d-none">
-            <p class="fw-semibold">AUTHORIZED PERSON NAME</p>
+            <p class="fw-semibold">Authorized Person Name</p>
             <input type="text" name="authorized_person" class="form-control">
-            <p class="fw-semibold mt-4">RELATIONSHIP</p>
+            <p class="fw-semibold mt-4">Relationship</p>
             <select name="authorized_relationship" class="form-control">
               <option>Sibling</option>
               <option>Parent</option>

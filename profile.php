@@ -62,22 +62,22 @@ $row = $select->fetch_assoc();
           <form id="changePasswordForm">
             <div class="modal-body">
               <div class="mb-3">
-                <label for="currentPassword" class="form-label">Current Password</label>
-                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required />
+                <label for="currentPassword" class="form-label"></label>
+                <input type="password" class="form-control" placeholder="Current Password" id="currentPassword" name="currentPassword" required />
               </div>
               <div class="mb-3">
-                <label for="newPassword" class="form-label">New Password</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword" required />
+                <label for="newPassword" class="form-label"></label>
+                <input type="password" class="form-control" placeholder="New Password" id="newPassword" name="newPassword" required />
               </div>
               <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required />
+                <label for="confirmPassword" class="form-label"></label>
+                <input type="password" class="form-control" placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required />
               </div>
               <p id="changePasswordMsg" class="text-danger"></p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" type="submit" class="btn btn-primary">Update Password</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" type="submit" class="btn btn-success">Update Password</button>
             </div>
           </form>
         </div>
@@ -102,7 +102,7 @@ $row = $select->fetch_assoc();
               <div id="pictureMsg" class="text-danger mt-2 fw-semibold"></div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save Picture</button>
+              <button type="submit" class="btn btn-success">Save Picture</button>
             </div>
           </form>
         </div>

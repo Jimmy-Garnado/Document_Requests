@@ -29,7 +29,7 @@ if ($_SESSION['staffrole'] != "Admin") {
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label fw-bold">Student ID</label>
-              <input type="text" name="a_stuid" class="form-control" placeholder="00001243" required>
+              <input type="text" name="a_stuid" class="form-control" placeholder="MA00001243" required>
             </div>
             <div class="mb-3">
               <label class="form-label fw-bold">Name</label>
@@ -39,6 +39,9 @@ if ($_SESSION['staffrole'] != "Admin") {
               <label class="form-label fw-bold">Email</label>
               <input type="email" name="a_stuemail" class="form-control" placeholder="juandelacruz@gmail.com" required>
             </div>
+            <div class="mb-3">
+          <label class="form-label">"Upon completion of the form,a username and password will be automatically generated"</label>
+          </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -79,8 +82,7 @@ if ($_SESSION['staffrole'] != "Admin") {
         <form id="batchstudentform">
           <div class="modal-body">
             <div class="mb-3">
-              <a class="btn btn-primary btn-sm" href="spreadsheets/template_for_batch_student.xlsx" download>Download
-                Template</a>
+              <a class="btn btn-info btn-sm" href="spreadsheets/template_for_batch_student.xlsx" download>Download Template</a>
             </div>
             <div class="mb-3">
               <label for="batchstaff" class="form-label fw-bold">Upload file</label>
