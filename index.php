@@ -68,7 +68,7 @@
         <form id="loginForm" class="mt-4">
           <div class="mb-2">
             <label for="stuid" class="form-label fw-semibold">User ID</label>
-            <input type="text" class="form-control" placeholder="User ID" name="user_id" />
+            <input type="text" class="form-control" name="user_id" />
           </div>
           <!-- <div class="mb-4">
             <label for="stupassword" class="form-label fw-semibold"></label>
@@ -79,7 +79,7 @@
             >
           <div class="input-group mb-4">
             <input type="password" class="form-control" name="user_password" />
-            <button class="btn btn-light" placeholder="Password" type="button" id="show-hide-button">Show</button>
+            <button class="btn btn-light" type="button" id="show-hide-button">Show</button>
           </div>
           <!-- <div class="mb-4">
             <label for="stupassword" class="form-label fw-semibold"
