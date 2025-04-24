@@ -58,6 +58,16 @@
 
           exit(); // Stop further processing
         }
+
+        if (strpos($stuemail, '@gmail.com') === false) {
+          echo json_encode([
+            "status" => "error",
+            "title" => "Invalid Student Email",
+            "description" => "Student email is not a Gmail address. Import process stopped. [ROW: $count]"
+          ]);
+
+          exit(); // Stop further processing
+        }
         // Check if email already exists
         $check = $conn->query("SELECT * FROM users WHERE stuemail = '$stuemail'");
         if ($check->num_rows > 0) {
