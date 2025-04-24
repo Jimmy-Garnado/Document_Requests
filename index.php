@@ -67,14 +67,12 @@
         />
         <form id="loginForm" class="mt-4">
           <div class="mb-2">
-            <label for="stuid" class="form-label fw-semibold">User ID</label>
-            <input type="text" class="form-control" name="user_id" />
+            <label for="stuid" class="form-label fw-semibold"></label>
+            <input type="text" class="form-control" placeholder="User ID" name="user_id" />
           </div>
           <div class="mb-4">
-            <label for="stupassword" class="form-label fw-semibold"
-              >Password</label
-            >
-            <input type="password" class="form-control" name="user_password" />
+            <label for="stupassword" class="form-label fw-semibold"></label>
+            <input type="password" class="form-control" placeholder="Password" name="user_password" />
           </div>
           <button
             type="submit"

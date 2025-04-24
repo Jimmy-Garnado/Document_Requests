@@ -131,7 +131,7 @@ if (!isset($_GET['r'])) {
           <button id="cancelButton" class="btn btn-danger">
             <i class="fas fa-times-circle"></i> Cancel
           </button>
-          <button class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#uploadModal'>
+          <button class="btn btn-success" data-bs-toggle='modal' data-bs-target='#uploadModal'>
             <i class="fas fa-upload"></i> Upload Attachments
           </button>
         </div>

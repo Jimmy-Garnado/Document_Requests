@@ -125,12 +125,7 @@ $stmt->close();
       </div>
 
       <section class="row m-0">
-        <div class="d-flex flex-row justify-space-between align-items-center mb-2 mt-2">
-          <button id="submitButton" class="ms-auto btn btn-success" type="button">
-            <i class="fa-solid fa-check ms-1"></i>
-            Proceed Payment
-          </button>
-        </div>
+        
 
         <div class="col-12 col-md-6">
           <div class="card">
@@ -231,6 +226,7 @@ $stmt->close();
                   <div class="form-group">
                     <label class="form-label fw-semibold">Section</label>
                     <select class="form-select" name="student_section">
+                    <option value="Select Year">- Select Section -</option>
                       <?php
                       include("api/connection.php");
                         $get_all_sections = $conn -> query("SELECT name FROM sections");
@@ -388,6 +384,12 @@ $stmt->close();
               <input type="file" name="attachments[]" class="form-control" id="authImages" multiple accept="image/*">
             </div>
           </div>
+          <div class="d-flex flex-row justify-space-between align-items-center mb-2 mt-2">
+          <button id="submitButton" class="ms-auto btn btn-success" type="button">
+            <i class="fa-solid fa-check ms-1"></i>
+            Proceed Payment
+          </button>
+        </div>
           <div class="card-body">
           <p class="mb-2 mt-3">"Please ensure that you complete the form before proceeding to the payment process"</p>
           </div>
