@@ -190,7 +190,8 @@ if (!isset($_GET['request_id'])) {
           <form id="sendMessageForm">
             <div class="modal-body">
               <input type="hidden" name="request_id" value="<?php echo $requestID; ?>">
-              <textarea class="form-control" name="message" rows="4" placeholder="Enter your message here..."></textarea>
+              <textarea class="form-control" name="message" rows="4"
+                placeholder="Enter your message here..."></textarea>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -209,17 +210,17 @@ if (!isset($_GET['request_id'])) {
         </a>
 
         <div class="ms-auto">
-        <?php
-        if ($_SESSION['staffrole'] === "Cashier") {
-          if ($row['payment_status'] == "Not Paid") {
-            echo "
-                <button class='btn btn-success ms-auto' data-bs-toggle='modal' data-bs-target='#processPaymentModal'>
-                  <i class='fas fa-cash-register me-1'></i> Process Payment
+          <?php
+          if ($_SESSION['staffrole'] === "Cashier") {
+            if ($row['status'] === "Pending" && $row['payment_status'] == "Paid") {
+              echo "
+                <button class='btn btn-success ms-auto approve-button' data-request-id='{$row['request_id']}'>
+                  <i class='fas fa-check me-1'></i> Proceed To Staff
                 </button>
               ";
+            }
           }
-        }
-        ?>
+          ?>
 
           <?php
           if ($_SESSION['staffrole'] === "Staff") {
@@ -228,41 +229,26 @@ if (!isset($_GET['request_id'])) {
               <i class='fas fa-envelope me-1'></i> Send Message
             </button>";
 
-            if (($row['status'] === "Pending" || $row['status'] === "Processing") && $row['payment_status'] == "Paid") {
-              // echo "
-              //     <button class='btn btn-danger ms-auto reject-button' data-request-id='{$row['request_id']}'>
-              //       <i class='fas fa-x me-1'></i> Reject
-              //     </button>
-
-              //     <button class='btn btn-success ms-auto approve-button' data-request-id='{$row['request_id']}'>
-              //       <i class='fas fa-check me-1'></i> Approve
-              //     </button>
-              //   ";
-
-                echo "
+            if ($row['status'] === "Pending") {
+              echo "
                 <button class='btn btn-danger ms-auto reject-button' data-request-id='{$row['request_id']}'>
-                    <i class='fas fa-x me-1'></i> Reject
-                  </button>
-                <button class='btn btn-success schedule-release-button' data-request-id='{$row['request_id']}'>
-                  <i class='fas fa-clock me-1'></i> Schedule Release
+                  <i class='fas fa-x me-1'></i> Reject
                 </button>
               ";
             }
 
             if ($row['status'] === "Processing") {
-              if ($row['payment_status'] == "Not Paid") {
-                echo "
-                    <button class='btn btn-success inform-button' data-request-id='{$row['request_id']}'>
-                      <i class='fas fa-circle-info me-1'></i> Inform Student For Payment
-                    </button>
-                  ";
-              } else {
-                echo "
+              //   echo "
+              //       <button class='btn btn-success inform-button' data-request-id='{$row['request_id']}'>
+              //         <i class='fas fa-circle-info me-1'></i> Inform Student For Payment
+              //       </button>
+              //     ";
+              // } else {
+              echo "
                     <button class='btn btn-success schedule-release-button' data-request-id='{$row['request_id']}'>
                       <i class='fas fa-clock me-1'></i> Schedule Release
                     </button>
                   ";
-              }
             }
 
             if ($row['status'] === "For Release") {
@@ -288,7 +274,7 @@ if (!isset($_GET['request_id'])) {
       </style>
       <div class="grid-2-col">
         <div>
-        <div class="card mb-3">
+          <div class="card mb-3">
             <div class="card-header">
               <h5>Information</h5>
             </div>
@@ -324,11 +310,11 @@ if (!isset($_GET['request_id'])) {
               <div class="row mb-2">
                 <div class="col-md-5"><strong>Date of Graduation:</strong></div>
                 <?php
-                  if ($row['date_of_graduation'] === '0000-00-00') {
-                      echo 'Not graduated';
-                  } else {
-                      echo date('F d, Y', strtotime($row['date_of_graduation']));
-                  }
+                if ($row['date_of_graduation'] === '0000-00-00') {
+                  echo 'Not graduated';
+                } else {
+                  echo date('F d, Y', strtotime($row['date_of_graduation']));
+                }
                 ?>
               </div>
               <div class="row mb-2">
@@ -684,35 +670,43 @@ if (!isset($_GET['request_id'])) {
         }
       }).then((result) => {
         if (result.isConfirmed) {
-    $.ajax({
-      url: 'api/post_approve_request.php',
-      type: 'POST',
-      data: {
-        requestid: target,
-        staffname: "<?php echo $_SESSION['staffname']; ?>" // make sure `staffname` is available in JS (e.g. set via PHP echo)
-      },
-      success: function (response) {
-        Swal.fire({
-          title: 'Request Approved!',
-          text: 'The request has been successfully approved.',
-          icon: 'success'
-        }).then(() => {
-          location.reload();
-        });
-      },
-      error: function () {
-        Swal.fire({
-          title: 'Error',
-          text: 'There was an issue processing the approval.',
-          icon: 'error'
-        });
-      }
-    });
-  }
+          $.ajax({
+            url: 'api/post_approve_request.php',
+            type: 'POST',
+            data: {
+              requestid: target,
+              staffname: "<?php echo $_SESSION['staffname']; ?>" // make sure `staffname` is available in JS (e.g. set via PHP echo)
+            },
+            beforeSend: () => {
+              $(".approve-button").attr("disabled", true)
+              $(".approve-button").text("Transferring to Staff (don't close or reload page)")
+            },
+            success: function (response) {
+              Swal.fire({
+                title: 'Request Approved!',
+                text: 'The request has been successfully approved.',
+                icon: 'success'
+              }).then(() => {
+                location.reload();
+              });
+            },
+            error: function () {
+              Swal.fire({
+                title: 'Error',
+                text: 'There was an issue processing the approval.',
+                icon: 'error'
+              });
+            },
+            complete: () => {
+              $(".approve-button").attr("disabled", false)
+              $(".approve-button").text("Proceed To Staff)")
+            },
+          });
+        }
       });
     })
 
-    $(document).on("click", ".complete-request-button", function(){
+    $(document).on("click", ".complete-request-button", function () {
       let requestId = $(this).data('request-id');
 
       Swal.fire({
