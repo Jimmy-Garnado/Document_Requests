@@ -37,6 +37,15 @@ $row = $select->fetch_assoc();
       height: 250px;
       object-fit: cover;
     }
+
+    .card-header {
+      background-color: #272727;
+      color: white;
+    }
+
+    section {
+      background-color: #cacaca;
+    }
   </style>
 
   <main class="container-fluid d-flex flex-lg-row flex-column p-0">
@@ -95,7 +104,7 @@ $row = $select->fetch_assoc();
       </div>
     </div>
 
-    <div class="col-12 col-lg-10 p-4">
+    <section class="col-12 col-lg-10 p-4">
       <div class="d-flex flex-row align-items-center justify-content-end mb-4 gap-2">
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePictureModal">
           Change Picture
@@ -213,7 +222,7 @@ $row = $select->fetch_assoc();
               <div class="card-header">
                 <h4 class="fw-bold mb-0">Transaction History</h4>
               </div>
-              <div class="card-body">
+              <div class="card-body table-responsive">
                 <table class="table table-bordered">
                   <thead>
                     <tr>
@@ -243,7 +252,7 @@ $row = $select->fetch_assoc();
           </div>
         </div>
       </form>
-    </div>
+    </section>
   </main>
   <script>
     // Preview selected image
